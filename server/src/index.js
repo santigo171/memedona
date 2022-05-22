@@ -2,26 +2,26 @@
 import { config as dotenvConfig } from "dotenv";
 dotenvConfig();
 
-// express
-import express from "express";
-
 // Modules
 import { DiscordCollector } from "./MemeCollectors/DiscordCollector.js";
 import { db } from "./Database.js";
+import { server } from "./server/server.js";
 
 class Api {
   #collectors;
   #dbCredentials;
+  #serverCredentials;
 
-  constructor(collectors, dbCredentials) {
+  constructor(collectors, dbCredentials, serverCredentials) {
     this.#collectors = collectors;
     this.#dbCredentials = dbCredentials;
+    this.#serverCredentials = serverCredentials;
   }
 
   async run() {
     // run db
     await db.setUp(this.#dbCredentials);
-    console.log("Db running");
+    console.log("db running");
 
     // run collectors
     this.#collectors.forEach(async (collector) => {
@@ -32,21 +32,9 @@ class Api {
     });
 
     // run rest api
-    const app = express();
-    const port = process.env.PORT || 5000;
-    app.use(express.json());
-
-    app.get("/", (req, res) => {
-      const fullUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
-
-      res.status(200).send({
-        memes: `${fullUrl}meme`,
-      });
-    });
-
-    app.get("/meme", (req, res) => {});
-
-    app.listen(port, () => console.log(`Server running on port ${port}`));
+    server.setUp(this.#serverCredentials);
+    await server.run();
+    console.log("server running");
   }
 }
 
@@ -67,5 +55,9 @@ const dbCredentials = {
   database: process.env.DB_NAME,
 };
 
-const api = new Api(collectors, dbCredentials);
+const serverCredentials = {
+  port: process.env.SERVER_PORT,
+};
+
+const api = new Api(collectors, dbCredentials, serverCredentials);
 api.run();
