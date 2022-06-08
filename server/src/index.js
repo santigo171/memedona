@@ -56,7 +56,7 @@ const dbCredentials = {
 };
 
 const serverCredentials = {
-  port: process.env.SERVER_PORT,
+  port: process.env.SERVER_PORT || 5000,
 };
 
 const api = new Api(collectors, dbCredentials, serverCredentials);
