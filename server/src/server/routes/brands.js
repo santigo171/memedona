@@ -68,9 +68,14 @@ router.delete("/:id", async (req, res) => {
 
   const fetchBrandSql = `select * from brands where brandsid`;
 
-  const brand = db.query();
+  const brand = db.query(fetchBrandSql);
+  if (!brand)
+    return res.status(400).send({ message: `Brand with ${id} doesn't exits` });
 
   const deleteBrandSql = `delete from brands where brands.id = ${id}`;
+  const brandRes = db.query(deleteBrandSql);
+
+  res.status(202).send({ message: brandRes });
 });
 
 router.get("/current", async (req, res) => {

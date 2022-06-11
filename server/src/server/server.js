@@ -1,7 +1,9 @@
 import express from "express";
+import * as cors from "cors";
 
 // routers
 import { router as brandRouter } from "./routes/brands.js";
+import { router as assetsRouter } from "./routes/assets.js";
 import { router as collectorRouter } from "./routes/collectors.js";
 import { router as memesRouter } from "./routes/memes.js";
 import { router as topicRouter } from "./routes/topics.js";
@@ -24,14 +26,16 @@ function updateQueryStringParameter(uri, key, value) {
 }
 
 class Server {
-  #app;
   #port;
+  #corsWhitelist;
+  #app;
 
   #v1Router;
 
   setUp(settings) {
-    const { port } = settings;
+    const { port, corsWhitelist } = settings;
     this.#port = port;
+    this.#corsWhitelist = corsWhitelist;
     this.#app = express();
     this.#setV1Router();
   }
@@ -42,11 +46,27 @@ class Server {
 
       app.use(express.json());
 
+      app.use(
+        cors.default({
+          origin: (origin, callback) => {
+            if (this.#corsWhitelist.indexOf(origin) !== -1 || !origin) {
+              callback(null, true);
+            } else {
+              callback(null, false);
+            }
+          },
+        })
+      );
+
       app.get("/", fullUrlMiddleware, (req, res) => {
-        res.status(400).send({
-          message: `Error: No version specified, try ${req.fullUrl}v1`,
+        res.status(200).send({
+          entrypoints: {
+            v1: `${req.fullUrl}v1`,
+            assets: `${req.fullUrl}assets`,
+          },
         });
       });
+      app.use("/assets", assetsRouter);
 
       app.use("/v1", this.#v1Router);
 
@@ -62,10 +82,12 @@ class Server {
       const { fullUrl } = req;
 
       res.status(200).send({
-        brands: `${fullUrl}brands`,
-        collectors: `${fullUrl}collectors`,
-        memes: `${fullUrl}memes`,
-        topics: `${fullUrl}topics`,
+        entrypoints: {
+          brands: `${fullUrl}brands`,
+          collectors: `${fullUrl}collectors`,
+          memes: `${fullUrl}memes`,
+          topics: `${fullUrl}topics`,
+        },
       });
     });
 

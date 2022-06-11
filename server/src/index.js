@@ -57,6 +57,7 @@ const dbCredentials = {
 
 const serverCredentials = {
   port: process.env.SERVER_PORT || 5000,
+  corsWhitelist: ["http://localhost:3000", "https://localhost:5000"],
 };
 
 const api = new Api(collectors, dbCredentials, serverCredentials);
