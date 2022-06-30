@@ -45,8 +45,13 @@ router.get("/", (req, res) => {
 router.get("/brands/:filePath", (req, res, next) =>
   sendFile(req, res, next, "brands")
 );
+
 router.get("/topics/:filePath", (req, res, next) =>
   sendFile(req, res, next, "topics")
+);
+
+router.get("/collectors/:filePath", (req, res, next) =>
+  sendFile(req, res, next, "collectors")
 );
 
 export { router };

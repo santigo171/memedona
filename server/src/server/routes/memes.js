@@ -23,28 +23,113 @@ const memesSqlSelectAndJoin = `
   join collectors on sources.collector_id = collectors.id
 `;
 
+function range(start, end) {
+  const array = [];
+  for (let i = start; i <= end; i++) {
+    array.push(i);
+  }
+  return array;
+}
+
+function formatExclude(exclude) {
+  // const flatExcludeArray = exclude
+  //   .flatMap((item) => {
+  //     if (Array.isArray(item)) {
+  //       return range(item[0], item[1]);
+  //     } else {
+  //       return [item];
+  //     }
+  //   })
+  //   .sort((a, b) => a - b)
+  //   .filter((item, index, array) => array.indexOf(item) === index);
+
+  // let newExcludeArray = flatExcludeArray.reduce(
+  //   (accumulator, actualValue, index, array) => {
+  //     console.log(accumulator);
+  //     return accumulator.push(actualValue);
+  //   },
+  //   []
+  // );
+  return exclude;
+}
+
 router.get("/", fullUrlMiddleware, async (req, res) => {
   const limit = parseInt(req.query.limit) || 5;
 
-  const topicId = parseInt(req.query["topic-id"]);
-  const minId = parseInt(req.query["min-id"]) || undefined;
-  const maxId = parseInt(req.query["max-id"]) || undefined;
-  const mostPopular = req.query["most-popular"];
-
-  const orderBySql = mostPopular ? "popularity desc" : "date desc";
-
-  if (minId || maxId) {
-    if (!(minId && maxId))
-      return res.status(400).send({
-        message:
-          "Error: if you send max-id, you must send min-id of vice versa",
-      });
+  // Exclude
+  let exclude;
+  try {
+    exclude = JSON.parse(req.query["exclude"]);
+  } catch (err) {
+    exclude = undefined;
   }
 
+  let valid = true;
+  if (exclude)
+    exclude.forEach((item) => {
+      if (!Array.isArray(item) && valid) {
+        if (typeof item !== "number") {
+          valid = false;
+          res
+            .status(400)
+            .send({ message: "Error: Must send numbers in exclude parameter" });
+        }
+      } else if (Array.isArray(item) && valid) {
+        const min = item[0];
+        const max = item[1];
+        if (!(min && max)) {
+          valid = false;
+          res.status(400).send({
+            message: "Error: if you send a min value must send a max one",
+          });
+        } else if (typeof item[0] !== "number" || typeof item[1] !== "number") {
+          valid = false;
+          res.status(400).send({
+            message: "Error: Must send numbers in exlude parameter",
+          });
+        } else if (max - min > 100) {
+          valid = false;
+          res.status(400).send({
+            message: "Error: Excluding numbers can't be more than 100",
+          });
+        } else if (min > max) {
+          valid = false;
+          res.status(400).send({
+            message:
+              "Error: Min number can't be greater than max number in exclude parameter",
+          });
+        }
+      }
+    });
+  if (!valid) return;
+  if (exclude) formatExclude(exclude);
+
+  // Topic Id
+  let topicId = parseInt(req.query["topic-id"]);
+
+  const orderBySql = topicId == 2 ? "popularity desc" : "date desc";
+  if (topicId == 1 || topicId == 2) topicId = undefined;
+
+  // Type
+  let type = req.query["type"];
+  if (type !== "vid" && type !== "img") type = undefined;
+
+  // Conditions
   const conditionsSql = [
     topicId ? `memes.topic_id = ${topicId}` : undefined,
-    maxId && minId ? `memes.id not between ${minId} and ${maxId}` : undefined,
-  ].filter((e) => e !== undefined);
+    type ? `memes.type = "${type}"` : undefined,
+    exclude
+      ? exclude.map((item) => {
+          if (Array.isArray(item)) {
+            return `memes.id not between ${item[0]} and ${item[1]}`;
+          } else {
+            return `not memes.id = ${item}`;
+          }
+        })
+      : undefined,
+  ]
+    .filter((e) => e !== undefined)
+    .reduce((r, e) => (Array.isArray(e) ? r.push(...e) : r.push(e), r), []);
 
   const memesSql = `
   ${memesSqlSelectAndJoin}  
@@ -55,34 +140,20 @@ router.get("/", fullUrlMiddleware, async (req, res) => {
 
   const memes = await db.query(memesSql);
 
-  const resMinId = memes.reduce((reducer, item) => {
-    return item.id < reducer ? (reducer = item.id) : reducer;
-  }, 99999999999999);
+  let newExclude = memes.map((meme) => meme.id);
+  if (exclude) {
+    newExclude = [...newExclude, ...exclude];
+  }
 
-  const resMaxId = memes.reduce((reducer, item) => {
-    return item.id > reducer ? (reducer = item.id) : reducer;
-  }, 0);
-
-  let globalMinId = resMinId;
-  if (minId && maxId) globalMinId = Math.min(minId, resMinId);
-
-  let globalMaxId = resMaxId;
-  if (minId && maxId) globalMaxId = Math.max(maxId, resMaxId);
-
-  const next = updateQueryStringParameter(
-    updateQueryStringParameter(req.fullUrl, "min-id", globalMinId),
-    "max-id",
-    globalMaxId
+  let next = updateQueryStringParameter(
+    req.fullUrl,
+    "exclude",
+    JSON.stringify(newExclude)
   );
+  if (topicId) next = updateQueryStringParameter(next, "topic-id", topicId);
 
   res.status(200).send({
-    info: {
-      minId: resMinId,
-      maxId: resMaxId,
-      globalMinId,
-      globalMaxId,
-      next,
-    },
+    next,
     results: memes,
   });
 });

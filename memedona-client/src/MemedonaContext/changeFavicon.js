@@ -1,7 +1,7 @@
 function changeFavicon(favicon_url) {
   if (!favicon_url) throw new Error("No favicon url");
 
-  const link = document.querySelector("link[rel~='icon']");
+  let link = document.querySelector("link[rel~='icon']");
   if (!link) {
     link = document.createElement("link");
     link.rel = "icon";

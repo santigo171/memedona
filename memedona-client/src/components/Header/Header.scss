@@ -1,27 +1,27 @@
 @import "../../library/scss/partials/variables";
 
 .Header {
-    display: grid;
-    grid-template-columns: 20% 50%;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 20% 50%;
 
-    background-color: $primary-background-color;
+  background-color: $primary-background-color;
 }
 
 .Header__logo {
-    @extend .center;
+  @extend .center;
 }
 
 .Header__logo__img {
-    width: 35px;
+  width: 35px;
 }
 
 .Header__text {
+  @extend .center;
+  text-align: left;
+  justify-content: start;
 
-    @extend .center;
-    text-align: left;
-    justify-content: start;
-
-    color: $deafult-meme-color;
-    font-family: $secondary-font;
-    font-size: $header-font-size;
+  color: $brand-color;
+  font-family: $secondary-font;
+  font-size: $header-font-size;
 }

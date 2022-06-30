@@ -60,32 +60,38 @@ class DiscordCollector extends MemeCollector {
 
   run() {
     this.#client.on("message", (message) => {
-      if (!this.#memesChannelsIds.includes(message.channel.id)) return;
-      if (!!message.author.bot) return;
+      try {
+        if (!this.#memesChannelsIds.includes(message.channel.id)) return;
+        if (!!message.author.bot) return;
 
-      const messageAttachments = Array.from(message.attachments);
-      if (!messageAttachments.length > 0) return;
+        const messageAttachments = Array.from(message.attachments);
+        if (!messageAttachments.length > 0) return;
 
-      messageAttachments.forEach((rawAttachment) => {
-        // get url
-        const { attachment: attachmentUrl } = rawAttachment[1];
-        const url = attachmentUrl.split("/").slice(-2).join("/");
-        // get type
-        let type;
-        try {
-          type = getFileType(attachmentUrl);
-        } catch (err) {
-          return console.error(err);
-        }
-        // get sourceId
-        const { id: sourceId } = this.#getSourceByChannelId(message.channel.id);
-        // collect
-        this.collectMeme({
-          url,
-          type,
-          sourceId,
+        messageAttachments.forEach((rawAttachment) => {
+          // get url
+          const { attachment: attachmentUrl } = rawAttachment[1];
+          const url = attachmentUrl.split("/").slice(-2).join("/");
+          // get type
+          let type;
+          try {
+            type = getFileType(attachmentUrl);
+          } catch (err) {
+            return console.error(err);
+          }
+          // get sourceId
+          const { id: sourceId } = this.#getSourceByChannelId(
+            message.channel.id
+          );
+          // collect
+          this.collectMeme({
+            url,
+            type,
+            sourceId,
+          });
         });
-      });
+      } catch (err) {
+        console.log(err);
+      }
     });
   }
 }

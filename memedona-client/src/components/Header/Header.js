@@ -1,11 +1,19 @@
 import React from "react";
-import "./Header.scss";
 
+import { MemedonaContext } from "../../MemedonaContext";
 import defaultLogoUrl from "../../assets/img/defaultLogo.png";
 
-function Header(props) {
-  const logoProps = props.logoProps || {};
+import "./Header.scss";
+
+function Header() {
+  const { logoProps: contextLogoProps } = React.useContext(MemedonaContext);
+
+  const logoProps = contextLogoProps || {};
   logoProps.url = logoProps.url || defaultLogoUrl;
+  const logoColor = `#${logoProps.color}`;
+
+  const headerTextStyle = logoProps.color ? { color: logoColor } : {};
+
   return (
     <header className="Header">
       <div className="Header__logo">
@@ -15,7 +23,7 @@ function Header(props) {
           alt="Memedona Logo"
         />
       </div>
-      <p style={{ color: logoProps.color }} className="Header__text">
+      <p style={headerTextStyle} className="Header__text">
         Memedona
       </p>
     </header>

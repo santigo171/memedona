@@ -1,0 +1,24 @@
+@import "../../library/scss/partials/variables";
+
+.Topic {
+  width: auto;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Topic__name {
+  margin-right: 15px;
+  text-align: center;
+  color: $primary-font-color;
+  font-family: $primary-font;
+  font-size: $topic-font-size;
+  font-weight: 300;
+}
+
+.Topic__logo {
+  width: auto;
+  height: 100%;
+}

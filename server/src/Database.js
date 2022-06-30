@@ -78,8 +78,12 @@ class Database {
     ${sqlFormatedMemes.join(",\n    ")}
     `;
 
-    const insertedMemes = await this.query(memesSql);
-    console.log(insertedMemes);
+    try {
+      const insertedMemes = await this.query(memesSql);
+      console.log(insertedMemes);
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 

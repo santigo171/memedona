@@ -1,0 +1,38 @@
+@import "../../library/scss/partials/variables";
+
+.Meme {
+  background-color: $primary-background-color;
+}
+
+.Meme__header {
+  height: 55px;
+  padding-left: 15px;
+
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+  color: $primary-font-color;
+}
+
+.Meme__header > * {
+  margin: 0 3px;
+}
+
+.Meme__header__logo {
+  height: 25px;
+}
+
+.Meme__header__text {
+  font-family: $primary-font;
+  font-weight: 300;
+  font-size: $meme-header-font-size;
+}
+
+.Meme__header__text--bold {
+  font-weight: 400;
+}
+
+.Meme__content {
+  width: 100%;
+}

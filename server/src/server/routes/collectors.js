@@ -5,7 +5,7 @@ import { db } from "../../Database.js";
 
 router.get("/", async (req, res) => {
   const collectors = await db.query(
-    `select id, name, logo_url from collectors`
+    `select id, name, logo_url as logoUrl from collectors`
   );
   res.status(200).send(collectors);
 });

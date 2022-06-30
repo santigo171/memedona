@@ -1,12 +1,28 @@
-$primary-background-color: #0C0C0C;
-$deafult-meme-color: #FFFFFF;
+// General
+$primary-background-color: #0c0c0c;
 
+$primary-font-color: #fff;
+
+$primary-font: "Roboto", sans-serif;
 $secondary-font: "Minecraft", sans-serif;
 
-$header-font-size: 3rem;
+// Header
+$header-font-size: 2.4rem;
+$brand-color: #fb903c;
+
+// Topic
+$topic-font-size: 2.2rem;
+$topic-border-color: #fff;
+$topic-border-size: 1px;
+
+$arrow-font-size: 3rem;
+$arrow-color: #fff;
+
+// Meme
+$meme-header-font-size: 2rem;
 
 .center {
-    display: grid;
-    justify-items: center;
-    align-items: center;
+  display: grid;
+  justify-items: center;
+  align-items: center;
 }
