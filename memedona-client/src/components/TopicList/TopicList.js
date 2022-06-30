@@ -5,27 +5,44 @@ import { MemedonaContext } from "../../MemedonaContext";
 
 import "./TopicList.scss";
 
-function TopicList() {
-  const { topics, currentTopicId, setCurrentTopicId } =
-    React.useContext(MemedonaContext);
-  let currentTopicIndex;
+// let windowListenerActivated = false;
 
-  const currentTopic = topics.filter((topic, index) => {
-    if (topic.id === currentTopicId) {
-      currentTopicIndex = index;
-      return true;
-    } else {
-      return false;
-    }
-  })[0];
+function TopicList() {
+  const { topics, currentTopic, setCurrentTopic } =
+    React.useContext(MemedonaContext);
+
+  const currentTopicIndex = topics.findIndex(
+    (topic) => topic.id === currentTopic.id
+  );
+
   const { id, name, color, logoUrl } = currentTopic;
+
+  const ref = React.useRef();
+  // let lastScrollTop = 0;
+
+  // if (!windowListenerActivated) {
+  //   window.addEventListener("scroll", () => {
+  //     const scrollTop =
+  //       window.pageYOffset || document.documentElement.scrollTop;
+  //     if (!(scrollTop > lastScrollTop)) {
+  //       // ref.current.style.top = "0";
+  //       console.log("up");
+  //     } else {
+  //       // ref.current.style.top = "-100px";
+  //       console.log("down");
+  //     }
+  //     lastScrollTop = scrollTop;
+  //   });
+
+  //   windowListenerActivated = true;
+  // }
 
   function Arrow({ left }) {
     const onClick = () => {
       if (left) {
-        setCurrentTopicId(topics[currentTopicIndex - 1].id);
+        setCurrentTopic(topics[currentTopicIndex - 1]);
       } else {
-        setCurrentTopicId(topics[currentTopicIndex + 1].id);
+        setCurrentTopic(topics[currentTopicIndex + 1]);
       }
     };
     return (
@@ -36,7 +53,7 @@ function TopicList() {
   }
 
   return (
-    <div className="TopicList">
+    <div ref={ref} className="TopicList">
       {currentTopicIndex !== 0 ? <Arrow left={true} /> : <div></div>}
       <Topic key={id} name={name} color={color} logoUrl={logoUrl} />
       {currentTopicIndex !== topics.length - 1 ? (

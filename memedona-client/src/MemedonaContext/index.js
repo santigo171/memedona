@@ -8,11 +8,10 @@ const API_URL = process.env.REACT_APP_API_URL;
 const MemedonaContext = React.createContext();
 
 function MemedonaProvider({ children }) {
-  const [memes, setMemes] = React.useState([]);
   const [logoProps, setLogoProps] = React.useState(undefined);
   const [collectors, setCollectors] = React.useState([]);
   const [topics, setTopics] = React.useState([]);
-  const [currentTopicId, setCurrentTopicId] = React.useState(undefined);
+  const [currentTopic, setCurrentTopic] = React.useState(undefined);
   const [loading, setLoading] = React.useState(true);
   const [nextFetchMoreMemesLink, setNextFetchMoreMemesLink] =
     React.useState(undefined);
@@ -44,7 +43,7 @@ function MemedonaProvider({ children }) {
       // Topics
       const fetchedTopics = await apiConsumer.getTopics();
       setTopics(fetchedTopics);
-      setCurrentTopicId(fetchedTopics[0].id);
+      setCurrentTopic(fetchedTopics[0]);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -59,25 +58,27 @@ function MemedonaProvider({ children }) {
       fetchedMemes = await apiConsumer.getMemes(nextFetchMoreMemesLink);
     } else {
       fetchedMemes = await apiConsumer.getMemes(undefined, {
-        "topic-id": currentTopicId,
+        "topic-id": currentTopic.id,
         type: "img",
       });
     }
 
     setNextFetchMoreMemesLink(fetchedMemes.next);
-    setMemes([...memes, ...fetchedMemes.results]);
+    let newCurrentTopic = { ...currentTopic };
+    if (!newCurrentTopic.memes) newCurrentTopic.memes = [];
+    newCurrentTopic.memes = [...newCurrentTopic.memes, ...fetchedMemes.results];
+    setCurrentTopic(newCurrentTopic);
     // console.log(memes.length);
   }
 
   return (
     <MemedonaContext.Provider
       value={{
-        memes,
         logoProps,
         collectors,
         topics,
-        currentTopicId,
-        setCurrentTopicId,
+        currentTopic,
+        setCurrentTopic,
         fetchMoreMemes,
         loading,
       }}

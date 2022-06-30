@@ -2,30 +2,14 @@ import React from "react";
 
 import { Meme } from "./Meme";
 import { MemedonaContext } from "../../MemedonaContext";
+import { useOnScreen } from "../../MemedonaContext/useOnScreen";
 
 import "./MemeList.scss";
 
-function useOnScreen(ref) {
-  const [isIntersecting, setIntersecting] = React.useState(false);
-
-  const observer = new IntersectionObserver(([entry]) =>
-    setIntersecting(entry.isIntersecting)
-  );
-
-  React.useEffect(() => {
-    observer.observe(ref.current);
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
-  return isIntersecting;
-}
-
 function MemeList() {
-  const { memes, fetchMoreMemes, currentTopicId } =
-    React.useContext(MemedonaContext);
-  console.log(currentTopicId);
+  const { currentTopic, fetchMoreMemes } = React.useContext(MemedonaContext);
+  let { memes } = currentTopic;
+  if (!memes) memes = [];
   if (memes.length < 5) fetchMoreMemes();
   return (
     <div className="MemeList">
