@@ -18,23 +18,30 @@ class Api {
     this.#serverCredentials = serverCredentials;
   }
 
-  async run() {
-    // run db
+  async runDb() {
     await db.setUp(this.#dbCredentials);
     console.log("db running");
+  }
 
-    // run collectors
+  async runCollectors() {
     this.#collectors.forEach(async (collector) => {
       const runningCollector = new collector.collector(collector.settings);
       await runningCollector.setUp();
       runningCollector.run();
       console.log("collector running");
     });
+  }
 
-    // run rest api
+  async runRestApi() {
     server.setUp(this.#serverCredentials);
     await server.run();
     console.log("server running");
+  }
+
+  run() {
+    this.runDb();
+    this.runCollectors();
+    this.runRestApi();
   }
 }
 
@@ -62,3 +69,8 @@ const serverCredentials = {
 
 const api = new Api(collectors, dbCredentials, serverCredentials);
 api.run();
+
+process.on("uncaughtException", (err) => {
+  console.log(err);
+  api.runCollectors();
+});

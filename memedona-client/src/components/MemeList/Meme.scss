@@ -1,6 +1,13 @@
 @import "../../library/scss/partials/variables";
 
 .Meme {
+  margin-bottom: 15px;
+
+  color: $primary-font-color;
+  font-family: $primary-font;
+  font-weight: 300;
+  font-size: $meme-header-font-size;
+
   background-color: $primary-background-color;
 }
 
@@ -9,10 +16,8 @@
   padding-left: 15px;
 
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
-
-  color: $primary-font-color;
 }
 
 .Meme__header > * {
@@ -23,16 +28,25 @@
   height: 25px;
 }
 
-.Meme__header__text {
-  font-family: $primary-font;
-  font-weight: 300;
-  font-size: $meme-header-font-size;
-}
-
 .Meme__header__text--bold {
   font-weight: 400;
 }
 
 .Meme__content {
   width: 100%;
+}
+
+.Meme__footer {
+  display: flex;
+}
+
+.Meme__footer__button {
+  margin: 0 13px;
+  display: flex;
+  align-items: center;
+}
+
+.Meme__footer__button__counter {
+  margin-left: 9px;
+  font-size: $meme-footer-font-size;
 }

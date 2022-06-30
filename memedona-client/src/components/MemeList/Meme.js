@@ -5,6 +5,9 @@ import { apiConsumer } from "../../MemedonaContext/apiConsumer";
 
 import "./Meme.scss";
 
+import like_image from "../../assets/img/like.png";
+import share_image from "../../assets/img/share.png";
+
 function Meme({ id, collectorId, source, likes, shares, type, url }) {
   const { collectors } = React.useContext(MemedonaContext);
 
@@ -31,11 +34,11 @@ function Meme({ id, collectorId, source, likes, shares, type, url }) {
       <img className="Meme__content" src={url} alt="Meme" />
       <div className="Meme__footer">
         <button className="Meme__footer__button">
-          <img src="" alt="" />
+          <img src={like_image} alt="" />
           <span className="Meme__footer__button__counter">{likes}</span>
         </button>
         <button className="Meme__footer__button">
-          <img src="" alt="" />
+          <img src={share_image} alt="" />
           <span className="Meme__footer__button__counter">{shares}</span>
         </button>
       </div>

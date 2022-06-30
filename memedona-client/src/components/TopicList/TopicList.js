@@ -5,8 +5,6 @@ import { MemedonaContext } from "../../MemedonaContext";
 
 import "./TopicList.scss";
 
-// let windowListenerActivated = false;
-
 function TopicList() {
   const { topics, currentTopic, setCurrentTopic } =
     React.useContext(MemedonaContext);
@@ -17,28 +15,9 @@ function TopicList() {
 
   const { id, name, color, logoUrl } = currentTopic;
 
-  const ref = React.useRef();
-  // let lastScrollTop = 0;
-
-  // if (!windowListenerActivated) {
-  //   window.addEventListener("scroll", () => {
-  //     const scrollTop =
-  //       window.pageYOffset || document.documentElement.scrollTop;
-  //     if (!(scrollTop > lastScrollTop)) {
-  //       // ref.current.style.top = "0";
-  //       console.log("up");
-  //     } else {
-  //       // ref.current.style.top = "-100px";
-  //       console.log("down");
-  //     }
-  //     lastScrollTop = scrollTop;
-  //   });
-
-  //   windowListenerActivated = true;
-  // }
-
   function Arrow({ left }) {
     const onClick = () => {
+      topics[currentTopicIndex] = currentTopic;
       if (left) {
         setCurrentTopic(topics[currentTopicIndex - 1]);
       } else {
@@ -53,7 +32,7 @@ function TopicList() {
   }
 
   return (
-    <div ref={ref} className="TopicList">
+    <div className="TopicList">
       {currentTopicIndex !== 0 ? <Arrow left={true} /> : <div></div>}
       <Topic key={id} name={name} color={color} logoUrl={logoUrl} />
       {currentTopicIndex !== topics.length - 1 ? (

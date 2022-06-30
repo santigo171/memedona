@@ -13,9 +13,9 @@ class Database {
   }
 
   query(sql) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.#connection.query(sql, (err, res) => {
-        if (err) reject(err);
+        if (err) console.log("AAAA" + err);
         resolve(res);
       });
     });

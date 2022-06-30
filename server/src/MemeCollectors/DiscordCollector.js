@@ -3,7 +3,6 @@ import { Client } from "discord.js";
 
 // classes and functions
 import { MemeCollector } from "../MemeCollector.js";
-import { readFile } from "../util/readFile.js";
 import { getFileType } from "../util/getFileType.js";
 import { db } from "../Database.js";
 
@@ -16,6 +15,7 @@ class DiscordCollector extends MemeCollector {
   constructor({ token, collectorIdInDb }) {
     super({ collector: "discord", collectorIdInDb });
     this.#TOKEN = token;
+    this.collectedMemes = [];
   }
 
   #login(token) {
@@ -60,38 +60,32 @@ class DiscordCollector extends MemeCollector {
 
   run() {
     this.#client.on("message", (message) => {
-      try {
-        if (!this.#memesChannelsIds.includes(message.channel.id)) return;
-        if (!!message.author.bot) return;
+      if (!this.#memesChannelsIds.includes(message.channel.id)) return;
+      if (!!message.author.bot) return;
 
-        const messageAttachments = Array.from(message.attachments);
-        if (!messageAttachments.length > 0) return;
+      const messageAttachments = Array.from(message.attachments);
+      if (!messageAttachments.length > 0) return;
 
-        messageAttachments.forEach((rawAttachment) => {
-          // get url
-          const { attachment: attachmentUrl } = rawAttachment[1];
-          const url = attachmentUrl.split("/").slice(-2).join("/");
-          // get type
-          let type;
-          try {
-            type = getFileType(attachmentUrl);
-          } catch (err) {
-            return console.error(err);
-          }
-          // get sourceId
-          const { id: sourceId } = this.#getSourceByChannelId(
-            message.channel.id
-          );
-          // collect
-          this.collectMeme({
-            url,
-            type,
-            sourceId,
-          });
+      messageAttachments.forEach((rawAttachment) => {
+        // get url
+        const { attachment: attachmentUrl } = rawAttachment[1];
+        const url = attachmentUrl.split("/").slice(-2).join("/");
+        // get type
+        let type;
+        try {
+          type = getFileType(attachmentUrl);
+        } catch (err) {
+          return console.error(err);
+        }
+        // get sourceId
+        const { id: sourceId } = this.#getSourceByChannelId(message.channel.id);
+        // collect
+        this.collectMeme({
+          url,
+          type,
+          sourceId,
         });
-      } catch (err) {
-        console.log(err);
-      }
+      });
     });
   }
 }
