@@ -1,9 +1,10 @@
 @import "../../library/scss/partials/variables";
 
 .MemeList {
+  margin-top: $topic-size;
+  max-width: $meme-max-width;
+  height: auto;
   background-color: $primary-background-color;
-  overflow-y: scroll;
-  overflow-x: hidden;
 }
 
 .InfiniteScroll {
@@ -13,6 +14,14 @@
 }
 
 @media only screen and (min-width: $tablet-breakpoint) {
-  .AppUi {
+  .MemeList {
+    margin-top: $topic-size--tablet;
+    max-width: $meme-max-width--tablet;
+  }
+}
+
+@media only screen and (min-width: $laptop-breakpoint) {
+  .MemeList {
+    max-width: $meme-max-width--laptop;
   }
 }

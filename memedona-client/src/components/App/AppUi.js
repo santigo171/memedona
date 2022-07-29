@@ -12,14 +12,14 @@ const AppUi = React.forwardRef(() => {
   const { loading, error } = React.useContext(MemedonaContext);
 
   return (
-    <div className="AppUi">
-      <Header />
-      <div className="AppUi__content">
-        {!loading && <TopicList />}
+    <>
+      {!loading && <TopicList />}
+      <div className="AppUi">
+        <Header />
         {!loading && !error && <MemeList />}
         {error && <ErrorComponent />}
       </div>
-    </div>
+    </>
   );
 });
 

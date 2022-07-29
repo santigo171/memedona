@@ -4,6 +4,7 @@
   border-bottom: $header-border-size solid $header-border-color;
 
   width: 100vw;
+  height: $header-size;
   background-color: $primary-background-color;
 }
 
@@ -33,6 +34,9 @@
 }
 
 @media only screen and (min-width: $tablet-breakpoint) {
+  .Header {
+    height: $header-size--tablet;
+  }
   .Header__container__logo__img {
     width: $header-logo-size--tablet;
   }

@@ -1,13 +1,20 @@
 @import "../../library/scss/partials/variables";
 
 .TopicList {
-  margin-top: 5px;
+  position: absolute;
+  top: $header-size;
+
+  height: $topic-size;
+  width: 100vw;
+
   display: grid;
   grid-template-columns: 70px auto 70px;
 
   align-items: center;
 
+  z-index: 2;
   background-color: $primary-background-color;
+  transition: top 0.3s linear;
 }
 
 .Arrow {
@@ -21,6 +28,10 @@
 }
 
 @media only screen and (min-width: $tablet-breakpoint) {
+  .TopicList {
+    height: $topic-size--tablet;
+    top: $header-size--tablet;
+  }
   .Arrow {
     font-size: $arrow-font-size--tablet;
   }

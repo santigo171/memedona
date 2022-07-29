@@ -35,6 +35,7 @@ $header-border-size: 1px;
 
 // Topic
 $topic-size: 90px;
+$topic-size--tablet: 90px;
 
 $topic-font-size: 2.2rem;
 $topic-font-size--tablet: 2.5rem;
@@ -44,6 +45,10 @@ $arrow-font-size--tablet: 4rem;
 $arrow-color: #fff;
 
 // Meme
+$meme-max-width: 500px;
+$meme-max-width--tablet: 500px;
+$meme-max-width--laptop: 600px;
+
 $meme-header-font-size: 2rem;
 $meme-header-font-size--tablet: 2.3rem;
 
