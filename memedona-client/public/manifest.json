@@ -1,6 +1,7 @@
 {
+  "name": "Memedona: Shitposting memes since 1852 xd",
   "short_name": "Memedona",
-  "name": "Memedona",
+  "description": "Memedona goes brrrrrrrrr memes memes memes and more memes",
   "icons": [
     {
       "src": "favicon.ico",
@@ -14,7 +15,8 @@
     }
   ],
   "start_url": ".",
-  "display": "standalone",
+  "display": "fullscreen",
+  "orientation": "portrait",
   "theme_color": "#000000",
   "background_color": "#0C0C0C"
 }

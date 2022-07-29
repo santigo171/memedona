@@ -22,3 +22,9 @@
   width: auto;
   height: 100%;
 }
+
+@media only screen and (min-width: $tablet-breakpoint) {
+  .Topic__name {
+    font-size: $topic-font-size--tablet;
+  }
+}

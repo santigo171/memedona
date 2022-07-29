@@ -49,4 +49,21 @@
 .Meme__footer__button__counter {
   margin-left: 9px;
   font-size: $meme-footer-font-size;
+  color: $secondary-font-color;
+}
+
+.Meme__footer__button__counter--used {
+  color: $primary-font-color;
+}
+
+@media only screen and (min-width: $tablet-breakpoint) {
+  .Meme {
+    font-size: $meme-header-font-size--tablet;
+  }
+  .Meme__footer__button__counter {
+    font-size: $meme-footer-font-size--tablet;
+  }
+}
+
+@media only screen and (min-width: $laptop-breakpoint) {
 }

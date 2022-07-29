@@ -16,16 +16,18 @@ function Header() {
 
   return (
     <header className="Header">
-      <div className="Header__logo">
-        <img
-          className="Header__logo__img"
-          src={logoProps.url}
-          alt="Memedona Logo"
-        />
+      <div className="Header__container">
+        <div className="Header__container__logo">
+          <img
+            className="Header__container__logo__img"
+            src={logoProps.url}
+            alt="Memedona Logo"
+          />
+        </div>
+        <p style={headerTextStyle} className="Header__container__text">
+          Memedona
+        </p>
       </div>
-      <p style={headerTextStyle} className="Header__text">
-        Memedona
-      </p>
     </header>
   );
 }

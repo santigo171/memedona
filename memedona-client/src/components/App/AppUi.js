@@ -4,17 +4,21 @@ import "./AppUi.scss";
 import { Header } from "../Header";
 import { TopicList } from "../TopicList";
 import { MemeList } from "../MemeList/MemeList";
+import { ErrorComponent } from "../ErrorComponent";
 
 import { MemedonaContext } from "../../MemedonaContext";
 
 const AppUi = React.forwardRef(() => {
-  const { loading } = React.useContext(MemedonaContext);
+  const { loading, error } = React.useContext(MemedonaContext);
 
   return (
     <div className="AppUi">
       <Header />
-      {!loading && <TopicList />}
-      {!loading && <MemeList />}
+      <div className="AppUi__content">
+        {!loading && <TopicList />}
+        {!loading && !error && <MemeList />}
+        {error && <ErrorComponent />}
+      </div>
     </div>
   );
 });

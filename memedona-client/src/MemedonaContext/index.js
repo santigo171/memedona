@@ -13,6 +13,8 @@ function MemedonaProvider({ children }) {
   const [topics, setTopics] = React.useState([]);
   const [currentTopic, setCurrentTopic] = React.useState(undefined);
   const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(false);
+  const [videosMuted, setVideosMuted] = React.useState(true);
 
   useEffect(() => {
     initialConsumeApi();
@@ -44,7 +46,7 @@ function MemedonaProvider({ children }) {
       setCurrentTopic(fetchedTopics[0]);
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      setError(true);
     }
   }
 
@@ -59,7 +61,6 @@ function MemedonaProvider({ children }) {
     } else {
       fetchedMemes = await apiConsumer.getMemes(undefined, {
         "topic-id": currentTopic.id,
-        type: "img",
       });
     }
 
@@ -69,8 +70,8 @@ function MemedonaProvider({ children }) {
     newCurrentTopic.nextFetchMoreMemesLink = fetchedMemes.next;
     setCurrentTopic(newCurrentTopic);
 
-    console.log(topics[0].memes);
-    console.log(topics[1].memes);
+    // console.log(topics[0].memes);
+    // console.log(topics[1].memes);
   }
 
   return (
@@ -83,6 +84,9 @@ function MemedonaProvider({ children }) {
         setCurrentTopic,
         fetchMoreMemes,
         loading,
+        error,
+        videosMuted,
+        setVideosMuted,
       }}
     >
       {children}

@@ -1,6 +1,26 @@
+@import "../../library/scss/partials/variables";
+
 .AppUi {
   height: 100vh;
 
   display: grid;
-  grid-template-rows: 70px 90px auto;
+  grid-template-rows: $header-size auto;
+  justify-items: center;
+}
+
+.AppUi > .AppUi__content {
+  width: 100%;
+  height: auto;
+
+  display: grid;
+  grid-template-rows: $topic-size auto;
+}
+
+@media only screen and (min-width: $tablet-breakpoint) {
+  .AppUi {
+    grid-template-rows: $header-size--tablet auto;
+  }
+  .AppUi__content {
+    max-width: 500px;
+  }
 }

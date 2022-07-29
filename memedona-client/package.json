@@ -6,12 +6,16 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.27.2",
     "dotenv": "^16.0.1",
+    "js-file-download": "^0.4.12",
     "normalize.css": "^8.0.1",
     "react": "^18.1.0",
+    "react-device-detect": "^2.2.2",
     "react-dom": "^18.1.0",
     "react-horizontal-scrolling-menu": "^2.8.2",
     "react-infinite-scroll-component": "^6.1.0",
+    "react-page-visibility": "^7.0.0",
     "react-scripts": "5.0.1",
     "sass": "^1.52.1",
     "web-vitals": "^2.1.4"
@@ -39,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "video.js": "^7.19.2"
   }
 }

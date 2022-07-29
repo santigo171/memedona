@@ -35,7 +35,11 @@ class ApiConsumer {
     return `${this.#apiUrl}/assets/${url}`;
   }
 
-  patchMeme() {}
+  patchMeme({ id, likes, shares }) {
+    const url = `${this.#apiUrl}/v1/memes/${id}`;
+    const body = { likes, shares };
+    return Request.patch(url, body);
+  }
 }
 
 const apiConsumer = new ApiConsumer();

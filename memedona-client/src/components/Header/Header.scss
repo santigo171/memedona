@@ -1,22 +1,28 @@
 @import "../../library/scss/partials/variables";
 
 .Header {
-  width: 100vw;
-  display: grid;
-  grid-template-columns: 20% 50%;
+  border-bottom: $header-border-size solid $header-border-color;
 
+  width: 100vw;
   background-color: $primary-background-color;
 }
 
-.Header__logo {
+.Header__container {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 20% 50%;
+  max-width: $header-container-max-width;
+}
+
+.Header__container__logo {
   @extend .center;
 }
 
-.Header__logo__img {
-  width: 35px;
+.Header__container__logo__img {
+  width: $header-logo-size;
 }
 
-.Header__text {
+.Header__container__text {
   @extend .center;
   text-align: left;
   justify-content: start;
@@ -24,4 +30,20 @@
   color: $brand-color;
   font-family: $secondary-font;
   font-size: $header-font-size;
+}
+
+@media only screen and (min-width: $tablet-breakpoint) {
+  .Header__container__logo__img {
+    width: $header-logo-size--tablet;
+  }
+
+  .Header__container__text {
+    font-size: $header-font-size--tablet;
+  }
+}
+
+@media only screen and (min-width: $laptop-breakpoint) {
+  .Header__container {
+    margin-left: 150px;
+  }
 }

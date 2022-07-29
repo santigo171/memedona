@@ -2,25 +2,53 @@
 $primary-background-color: #0c0c0c;
 
 $primary-font-color: #fff;
+$secondary-font-color: #8d8d8d;
 
 $primary-font: "Roboto", sans-serif;
 $secondary-font: "Minecraft", sans-serif;
 
+// Breakpoints
+$tablet-breakpoint: 570px;
+$laptop-breakpoint: 1100px;
+
+// @media only screen and (min-width: $tablet-breakpoint) {
+// }
+
+// @media only screen and (min-width: $laptop-breakpoint) {
+// }
+
 // Header
+$header-size: 70px;
+$header-size--tablet: 90px;
+
 $header-font-size: 2.4rem;
+$header-font-size--tablet: 2.9rem;
 $brand-color: #fb903c;
 
+$header-logo-size: 35px;
+$header-logo-size--tablet: 55px;
+
+$header-container-max-width: 500px;
+
+$header-border-color: #fff;
+$header-border-size: 1px;
+
 // Topic
+$topic-size: 90px;
+
 $topic-font-size: 2.2rem;
-$topic-border-color: #fff;
-$topic-border-size: 1px;
+$topic-font-size--tablet: 2.5rem;
 
 $arrow-font-size: 3rem;
+$arrow-font-size--tablet: 4rem;
 $arrow-color: #fff;
 
 // Meme
 $meme-header-font-size: 2rem;
+$meme-header-font-size--tablet: 2.3rem;
+
 $meme-footer-font-size: 2.1rem;
+$meme-footer-font-size--tablet: 2.5rem;
 
 .center {
   display: grid;
