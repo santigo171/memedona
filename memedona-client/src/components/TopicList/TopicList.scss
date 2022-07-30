@@ -3,6 +3,8 @@
 .TopicList {
   position: absolute;
   top: $header-size;
+  left: 50%;
+  transform: translate(-50%);
 
   height: $topic-size;
   width: 100vw;
@@ -31,8 +33,15 @@
   .TopicList {
     height: $topic-size--tablet;
     top: $header-size--tablet;
+    width: $meme-max-width--tablet;
   }
   .Arrow {
     font-size: $arrow-font-size--tablet;
+  }
+}
+
+@media only screen and (min-width: $laptop-breakpoint) {
+  .TopicList {
+    width: $meme-max-width--laptop;
   }
 }

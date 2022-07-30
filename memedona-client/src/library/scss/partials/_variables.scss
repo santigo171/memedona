@@ -45,7 +45,7 @@ $arrow-font-size--tablet: 4rem;
 $arrow-color: #fff;
 
 // Meme
-$meme-max-width: 500px;
+$meme-max-width: 100vw;
 $meme-max-width--tablet: 500px;
 $meme-max-width--laptop: 600px;
 
@@ -54,6 +54,19 @@ $meme-header-font-size--tablet: 2.3rem;
 
 $meme-footer-font-size: 2.1rem;
 $meme-footer-font-size--tablet: 2.5rem;
+
+// LoadingMoreMemes
+$loading-memes-content-width: 230px;
+
+$loading-memes-title-size: 2.2rem;
+$loading-memes-title-size--tablet: 2rem;
+
+$loading-memes-subtitle-size: 1.5rem;
+$loading-memes-subtitle-size--tablet: 2rem;
+
+$loading-memes-img-rotation-speed: 3s;
+$loading-memes-img-size: 150px;
+$loading-memes-img-size--tablet: 150px;
 
 .center {
   display: grid;

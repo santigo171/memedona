@@ -7,12 +7,6 @@
   background-color: $primary-background-color;
 }
 
-.InfiniteScroll {
-  width: 100vw;
-  height: 10px;
-  background-color: #fff;
-}
-
 @media only screen and (min-width: $tablet-breakpoint) {
   .MemeList {
     margin-top: $topic-size--tablet;

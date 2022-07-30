@@ -51,27 +51,30 @@ function MemedonaProvider({ children }) {
   }
 
   async function fetchMoreMemes() {
+    console.log("MORE MEMES");
     if (loading) return;
     let fetchedMemes;
 
-    if (currentTopic.nextFetchMoreMemesLink) {
-      fetchedMemes = await apiConsumer.getMemes(
-        currentTopic.nextFetchMoreMemesLink
-      );
-    } else {
-      fetchedMemes = await apiConsumer.getMemes(undefined, {
-        "topic-id": currentTopic.id,
-      });
-    }
+    setTimeout(async () => {
+      if (currentTopic.nextFetchMoreMemesLink) {
+        fetchedMemes = await apiConsumer.getMemes(
+          currentTopic.nextFetchMoreMemesLink
+        );
+      } else {
+        fetchedMemes = await apiConsumer.getMemes(undefined, {
+          "topic-id": currentTopic.id,
+        });
+      }
 
-    let newCurrentTopic = { ...currentTopic };
-    if (!newCurrentTopic.memes) newCurrentTopic.memes = [];
-    newCurrentTopic.memes.push(...fetchedMemes.results);
-    newCurrentTopic.nextFetchMoreMemesLink = fetchedMemes.next;
-    setCurrentTopic(newCurrentTopic);
+      let newCurrentTopic = { ...currentTopic };
+      if (!newCurrentTopic.memes) newCurrentTopic.memes = [];
+      newCurrentTopic.memes.push(...fetchedMemes.results);
+      newCurrentTopic.nextFetchMoreMemesLink = fetchedMemes.next;
+      setCurrentTopic(newCurrentTopic);
 
-    // console.log(topics[0].memes);
-    // console.log(topics[1].memes);
+      // console.log(topics[0].memes);
+      // console.log(topics[1].memes);
+    }, 0);
   }
 
   return (

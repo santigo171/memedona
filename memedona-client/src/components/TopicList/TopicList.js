@@ -13,6 +13,7 @@ function TopicList() {
     if (el == null) return;
 
     let lastScrollTop;
+    const top = el.style.top;
     window.addEventListener("scroll", () => {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       if (scrollTop > 170) {
@@ -24,7 +25,7 @@ function TopicList() {
         }
       } else {
         el.style.position = "absolute";
-        el.style.top = "70px";
+        el.style.top = top;
       }
       lastScrollTop = scrollTop;
     });

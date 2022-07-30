@@ -1,0 +1,76 @@
+@import "../../library/scss/partials/variables";
+
+.LoadingMoreMemes {
+  position: relative;
+  height: 500px;
+  width: 100vw;
+
+  color: $primary-font-color;
+  font-family: $primary-font;
+  text-align: center;
+}
+
+.LoadingMoreMemes__content {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%);
+  width: $loading-memes-content-width;
+  height: auto;
+
+  display: grid;
+  grid-template-rows: 50% 25% 25%;
+  justify-items: center;
+}
+
+.LoadingMoreMemes__content__img {
+  width: $loading-memes-img-size;
+  animation: rotate $loading-memes-img-rotation-speed infinite ease-in-out;
+}
+
+.LoadingMoreMemes__content__title {
+  margin-top: 26px;
+  font-size: $loading-memes-title-size;
+  font-weight: normal;
+}
+
+.LoadingMoreMemes__content__subtitle {
+  margin-top: 10px;
+  font-size: $loading-memes-subtitle-size;
+  font-style: italic;
+  font-weight: lighter;
+}
+
+@media only screen and (min-width: $tablet-breakpoint) {
+  .LoadingMoreMemes {
+    width: $meme-max-width--tablet;
+  }
+  .LoadingMoreMemes__content__img {
+    width: $loading-memes-img-size--tablet;
+  }
+
+  .LoadingMoreMemes__content__title {
+    font-size: $loading-memes-title-size--tablet;
+  }
+  .LoadingMoreMemes__content__subtitle {
+    font-size: $loading-memes-subtitle-size--tablet;
+  }
+}
+
+@media only screen and (min-width: $laptop-breakpoint) {
+  .LoadingMoreMemes {
+    width: $meme-max-width--laptop;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  80% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,8 +1,8 @@
 import React from "react";
 
 import { Meme } from "./Meme";
+import { LoadingMoreMemes } from "./LoadingMoreMemes";
 import { MemedonaContext } from "../../MemedonaContext";
-import { useOnScreen } from "../../MemedonaContext/useOnScreen";
 
 import "./MemeList.scss";
 
@@ -11,6 +11,7 @@ function MemeList() {
   let { memes } = currentTopic;
   if (!memes) memes = [];
   if (memes.length < 5) fetchMoreMemes();
+
   return (
     <div className="MemeList">
       {memes.map(({ id, collectorId, source, likes, shares, type, url }) => (
@@ -25,16 +26,9 @@ function MemeList() {
           url={url}
         />
       ))}
-      <InfiniteScroll functionOnVisible={fetchMoreMemes} />
+      <LoadingMoreMemes functionOnVisible={fetchMoreMemes} />
     </div>
   );
-}
-
-function InfiniteScroll({ functionOnVisible }) {
-  const ref = React.useRef();
-  const isVisible = useOnScreen(ref);
-  if (isVisible) functionOnVisible();
-  return <div ref={ref} className="InfiniteScroll" />;
 }
 
 export { MemeList };
