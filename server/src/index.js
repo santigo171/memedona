@@ -9,6 +9,8 @@ import { server } from "./server/server.js";
 
 class Api {
   #collectors;
+  runningCollectors = [];
+
   #dbCredentials;
   #serverCredentials;
 
@@ -19,8 +21,12 @@ class Api {
   }
 
   async runDb() {
-    await db.setUp(this.#dbCredentials);
-    console.log("db running");
+    try {
+      await db.setUp(this.#dbCredentials);
+      console.log("db running");
+    } catch (err) {
+      throw new Error("db not running");
+    }
   }
 
   async runCollectors() {
@@ -28,7 +34,9 @@ class Api {
       const runningCollector = new collector.collector(collector.settings);
       await runningCollector.setUp();
       runningCollector.run();
-      console.log("collector running");
+
+      this.runningCollectors.push(runningCollector);
+      console.log(`${runningCollector.collector} collector running`);
     });
   }
 
@@ -43,13 +51,18 @@ class Api {
     this.runCollectors();
     this.runRestApi();
   }
+
+  resetCollectors() {
+    this.runningCollectors = [];
+    this.runCollectors();
+  }
 }
 
 const collectors = [
   {
     collector: DiscordCollector,
     settings: {
-      token: process.env.DISCORD_TOKEN,
+      tokenArray: [process.env.DISCORD_TOKEN_1, process.env.DISCORD_TOKEN_2],
       collectorIdInDb: process.env.DISCORD_ID_IN_DB,
     },
   },
@@ -64,13 +77,36 @@ const dbCredentials = {
 
 const serverCredentials = {
   port: process.env.SERVER_PORT || 5000,
-  corsWhitelist: ["http://localhost:3000", "https://localhost:5000"],
+  corsWhitelist: [
+    "http://localhost:3000",
+    "https://localhost:5000",
+    "http://172.21.202.218:3000",
+    "https://5fd9-181-57-126-218.ngrok.io/",
+  ],
 };
 
 const api = new Api(collectors, dbCredentials, serverCredentials);
-api.run();
+function run() {
+  console.log("Starting Memedona Server!!!");
+  api.run();
+}
 
-process.on("uncaughtException", (err) => {
-  console.log(err);
-  api.runCollectors();
+process.on("uncaughtException", async (err) => {
+  console.log("\nUNCAUGHT EXCEPTION");
+  if (err.message == "db not running") {
+    console.error("Db not running");
+    process.exit();
+  } else if (
+    err.message == "Cannot read properties of undefined (reading 'cache')"
+  ) {
+    console.log("Undefined cache ;(");
+    api.resetCollectors();
+  } else {
+    console.log(err);
+    console.log(err.message);
+
+    process.exit();
+  }
 });
+
+run();

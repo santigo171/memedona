@@ -186,7 +186,7 @@ router.patch("/:memeId", async (req, res) => {
   const shares = parseInt(req.body.shares) || 0;
 
   if (likes || shares) {
-    if (likes > 1 || shares > 1) {
+    if (likes > 1 || shares > 1 || likes < 0 || shares < 0) {
       return res.status(400).send({
         message: "Patch value for likes/shares must be 1",
       });

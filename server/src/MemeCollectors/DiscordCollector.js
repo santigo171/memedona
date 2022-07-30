@@ -10,11 +10,12 @@ class DiscordCollector extends MemeCollector {
   #client;
   #memesChannelsIds;
   #sources;
-  #TOKEN;
+  #TOKEN_ARRAY;
+  #currentTokenIndex = 0;
 
-  constructor({ token, collectorIdInDb }) {
+  constructor({ tokenArray, collectorIdInDb }) {
     super({ collector: "discord", collectorIdInDb });
-    this.#TOKEN = token;
+    this.#TOKEN_ARRAY = tokenArray;
     this.collectedMemes = [];
   }
 
@@ -23,6 +24,7 @@ class DiscordCollector extends MemeCollector {
       let client = new Client({ _tokenType: "" });
       client.login(token);
       client.once("ready", () => {
+        console.log("logged has " + client.user.username);
         resolve(client);
       });
     });
@@ -47,7 +49,10 @@ class DiscordCollector extends MemeCollector {
 
   setUp() {
     return new Promise(async (resolve) => {
-      const client = await this.#login(this.#TOKEN);
+      console.log(`Setting Up ${this.collector}`);
+      const client = await this.#login(
+        this.#TOKEN_ARRAY[this.#currentTokenIndex]
+      );
       const memesChannelsIds = await this.#getMemesChannelsIds();
 
       await Promise.all([client, memesChannelsIds]);
@@ -58,7 +63,17 @@ class DiscordCollector extends MemeCollector {
     });
   }
 
+  async destroy() {
+    await this.#client.destroy();
+    console.log(`Destroyed ${this.collector}`);
+    this.#currentTokenIndex =
+      this.#currentTokenIndex + 1 >= this.#TOKEN_ARRAY.length
+        ? 0
+        : this.#currentTokenIndex + 1;
+  }
+
   run() {
+    console.log(`Running ${this.collector}`);
     this.#client.on("message", (message) => {
       if (!this.#memesChannelsIds.includes(message.channel.id)) return;
       if (!!message.author.bot) return;

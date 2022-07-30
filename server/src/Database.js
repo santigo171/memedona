@@ -15,7 +15,7 @@ class Database {
   query(sql) {
     return new Promise((resolve) => {
       this.#connection.query(sql, (err, res) => {
-        if (err) console.log("AAAA" + err);
+        if (err) console.log(err);
         resolve(res);
       });
     });
