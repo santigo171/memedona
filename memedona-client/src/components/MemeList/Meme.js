@@ -1,7 +1,7 @@
 import React from "react";
 
 import { MemedonaContext } from "../../MemedonaContext";
-import { download } from "../../MemedonaContext/donwload";
+import { download } from "../../MemedonaContext/download";
 import { apiConsumer } from "../../MemedonaContext/apiConsumer";
 import { VideoJS } from "./VideoJS";
 
@@ -9,6 +9,7 @@ import "./Meme.scss";
 
 import like_image from "../../assets/img/like.png";
 import share_image from "../../assets/img/share.png";
+import download_image from "../../assets/img/download.png";
 
 function Meme({ id, collectorId, source, likes, shares, type, url }) {
   const { collectors } = React.useContext(MemedonaContext);
@@ -38,7 +39,20 @@ function Meme({ id, collectorId, source, likes, shares, type, url }) {
   const shareCounterRef = React.useRef();
   let shared = false;
 
-  function share() {
+  async function sendShare() {
+    shared = true;
+    shareCounterRef.current.classList.add(
+      "Meme__footer__button__counter--used"
+    );
+    shareCounterRef.current.innerHTML =
+      parseInt(shareCounterRef.current.innerHTML) + 1;
+    await apiConsumer.patchMeme({
+      id,
+      shares: 1,
+    });
+  }
+
+  function shareMeme() {
     if ("share" in navigator) {
       try {
         navigator.share({
@@ -51,21 +65,14 @@ function Meme({ id, collectorId, source, likes, shares, type, url }) {
     } else {
       download(url);
     }
+    if (shared) return;
+    sendShare();
   }
 
-  async function shareMeme() {
-    share();
+  function downloadMeme() {
+    download(url);
     if (shared) return;
-    shared = true;
-    shareCounterRef.current.classList.add(
-      "Meme__footer__button__counter--used"
-    );
-    shareCounterRef.current.innerHTML =
-      parseInt(shareCounterRef.current.innerHTML) + 1;
-    await apiConsumer.patchMeme({
-      id,
-      shares: 1,
-    });
+    sendShare();
   }
 
   return (
@@ -98,6 +105,12 @@ function Meme({ id, collectorId, source, likes, shares, type, url }) {
           <span ref={shareCounterRef} className="Meme__footer__button__counter">
             {shares}
           </span>
+        </button>
+        <button
+          className="Meme__footer__button Meme__footer__button--right"
+          onClick={downloadMeme}
+        >
+          <img src={download_image} alt="Download button" />
         </button>
       </div>
     </div>

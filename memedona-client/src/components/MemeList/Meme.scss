@@ -50,6 +50,11 @@
   align-items: center;
 }
 
+.Meme__footer__button--right {
+  margin-left: auto;
+  margin-right: 15px;
+}
+
 .Meme__footer__button__counter {
   margin-left: 9px;
   font-size: $meme-footer-font-size;

@@ -101,9 +101,12 @@ process.on("uncaughtException", async (err) => {
   ) {
     console.log("Undefined cache ;(");
     api.resetCollectors();
+  } else if (err.code == "ER_DUP_ENTRY") {
+    console.log("Duplicate entry ;(");
+    api.resetCollectors();
   } else {
     console.log(err);
-    console.log(err.message);
+    console.log(err.code);
 
     process.exit();
   }
