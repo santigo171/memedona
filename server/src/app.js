@@ -86,12 +86,7 @@ const dbCredentials = {
 
 const serverCredentials = {
   port: process.env.SERVER_PORT || 5000,
-  corsWhitelist: [
-    "http://localhost:3000",
-    "https://localhost:5000",
-    "http://172.21.202.218:3000",
-    "https://5fd9-181-57-126-218.ngrok.io/",
-  ],
+  corsWhitelist: ["https://memedona.com"],
 };
 
 let api;
