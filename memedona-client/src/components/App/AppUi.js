@@ -13,7 +13,7 @@ const AppUi = React.forwardRef(() => {
 
   return (
     <>
-      {!loading && <TopicList />}
+      {!loading && !error && <TopicList />}
       <div className="AppUi">
         <Header />
         {!loading && !error && <MemeList />}
