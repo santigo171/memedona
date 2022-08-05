@@ -13,9 +13,9 @@ class Database {
   }
 
   query(sql) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       this.#connection.query(sql, (err, res) => {
-        if (err) console.log(err);
+        if (err) reject(err);
         resolve(res);
       });
     });
@@ -82,7 +82,7 @@ class Database {
       const insertedMemes = await this.query(memesSql);
       console.log(insertedMemes);
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 }

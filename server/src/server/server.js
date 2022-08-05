@@ -29,6 +29,7 @@ class Server {
   #port;
   #corsWhitelist;
   #app;
+  #runningApp;
 
   #v1Router;
 
@@ -70,8 +71,12 @@ class Server {
 
       app.use("/v1", this.#v1Router);
 
-      app.listen(this.#port, () => resolve(this.#port));
+      this.#runningApp = app.listen(this.#port, () => resolve(this.#port));
     });
+  }
+
+  stop() {
+    this.#runningApp.close();
   }
 
   #setV1Router() {
