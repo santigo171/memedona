@@ -86,13 +86,17 @@ const dbCredentials = {
 
 const serverCredentials = {
   port: process.env.SERVER_PORT || 5000,
-  corsWhitelist: ["https://memedona.com"],
+  corsWhitelist: Boolean(process.env.DEBUG_MODE)
+    ? [process.env.DEBUG_CLIENT_URL]
+    : ["https://memedona.com"],
 };
 
 let api;
 
 function run() {
   console.log("Starting Memedona Server!!!");
+  if (Boolean(process.env.DEBUG_MODE))
+    console.log(`Debugging Mode, client url: ${process.env.DEBUG_CLIENT_URL}`);
   api = new Api(collectors, dbCredentials, serverCredentials);
   api.run();
 }
