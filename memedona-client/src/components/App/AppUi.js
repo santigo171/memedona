@@ -5,6 +5,7 @@ import { Header } from "../Header";
 import { TopicList } from "../TopicList";
 import { MemeList } from "../MemeList/MemeList";
 import { ErrorComponent } from "../ErrorComponent";
+import { LoadingMoreMemes } from "../MemeList/LoadingMoreMemes.js";
 
 import { MemedonaContext } from "../../MemedonaContext";
 
@@ -18,6 +19,7 @@ const AppUi = React.forwardRef(() => {
         <Header />
         {!loading && !error && <MemeList />}
         {error && <ErrorComponent />}
+        {loading && !error && <LoadingMoreMemes functionOnVisible={() => {}} />}
       </div>
     </>
   );
