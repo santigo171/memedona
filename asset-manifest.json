@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.51c2cdd4.css",
+    "main.js": "/static/js/main.80870fda.js",
+    "service-worker.js": "/service-worker.js",
+    "static/media/Minecraft.ttf": "/static/media/Minecraft.81f6c7f882fcc2dee106.ttf",
+    "static/media/defaultLogo.png": "/static/media/defaultLogo.3738577974f332d75908.png",
+    "index.html": "/index.html",
+    "main.51c2cdd4.css.map": "/static/css/main.51c2cdd4.css.map",
+    "main.80870fda.js.map": "/static/js/main.80870fda.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.51c2cdd4.css",
+    "static/js/main.80870fda.js"
+  ]
+}
