@@ -1,0 +1,60 @@
+@import "../../library/scss/partials/variables";
+
+.A2HS {
+  position: fixed;
+  bottom: 0;
+
+  height: $a2hs-height;
+  width: 100vw;
+
+  padding: $a2hs-padding;
+
+  display: grid;
+  grid-template-rows: 70px 70px $a2hs-img-height;
+  justify-items: center;
+  align-items: center;
+
+  font-family: $primary-font;
+  text-align: center;
+  color: $primary-font-color;
+  background-color: $secondary-background-color;
+}
+
+.button {
+  border-radius: 25px;
+
+  background-color: $primary-font-color;
+  color: $primary-background-color;
+}
+
+.A2HS__button {
+  @extend .button;
+  padding: 15px;
+  font-weight: 300;
+  font-size: 2rem;
+}
+
+.A2HS__X {
+  @extend .button;
+  height: $a2hs-X-height;
+  width: $a2hs-X-height;
+
+  position: absolute;
+  top: $a2hs-padding;
+  right: $a2hs-padding;
+
+  font-size: 2.3rem;
+}
+
+.A2HS__text {
+  font-size: 1.5rem;
+}
+
+.A2HS__text__span {
+  font-family: $secondary-font;
+  color: $brand-color;
+}
+
+.A2HS__img {
+  height: 100%;
+}

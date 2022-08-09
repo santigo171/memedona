@@ -1,5 +1,6 @@
 // General
 $primary-background-color: #0c0c0c;
+$secondary-background-color: #0c0c0cc0;
 
 $primary-font-color: #fff;
 $secondary-font-color: #8d8d8d;
@@ -69,6 +70,12 @@ $loading-memes-subtitle-size--tablet: 2rem;
 $loading-memes-img-rotation-speed: 3s;
 $loading-memes-img-size: 150px;
 $loading-memes-img-size--tablet: 150px;
+
+//Add To Home Screen
+$a2hs-padding: 20px;
+$a2hs-height: 450px;
+$a2hs-X-height: 30px;
+$a2hs-img-height: 250px;
 
 .center {
   display: grid;

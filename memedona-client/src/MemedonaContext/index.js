@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { changeFavicon } from "./changeFavicon";
 import { apiConsumer } from "./apiConsumer";
@@ -15,8 +15,9 @@ function MemedonaProvider({ children }) {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
   const [videosMuted, setVideosMuted] = React.useState(true);
+  const [showA2HS, setShowA2HS] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     initialConsumeApi();
   }, []);
 
@@ -90,6 +91,8 @@ function MemedonaProvider({ children }) {
         error,
         videosMuted,
         setVideosMuted,
+        showA2HS,
+        setShowA2HS,
       }}
     >
       {children}

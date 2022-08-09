@@ -6,11 +6,12 @@ import { TopicList } from "../TopicList";
 import { MemeList } from "../MemeList/MemeList";
 import { ErrorComponent } from "../ErrorComponent";
 import { LoadingMoreMemes } from "../MemeList/LoadingMoreMemes.js";
+import { AddToHomeScreen } from "../AddToHomeScreen";
 
 import { MemedonaContext } from "../../MemedonaContext";
 
 const AppUi = React.forwardRef(() => {
-  const { loading, error } = React.useContext(MemedonaContext);
+  const { loading, error, showA2HS } = React.useContext(MemedonaContext);
 
   return (
     <>
@@ -20,6 +21,7 @@ const AppUi = React.forwardRef(() => {
         {!loading && !error && <MemeList />}
         {error && <ErrorComponent />}
         {loading && !error && <LoadingMoreMemes functionOnVisible={() => {}} />}
+        {showA2HS && <AddToHomeScreen />}
       </div>
     </>
   );
