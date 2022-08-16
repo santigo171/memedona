@@ -2,6 +2,7 @@ import mysql from "mysql2";
 
 class Database {
   #connection;
+  #database;
 
   #connect() {
     return new Promise((resolve, reject) => {
@@ -25,6 +26,7 @@ class Database {
     return new Promise(async (resolve, reject) => {
       try {
         const { host, user, password, database } = settings;
+        this.#database = database;
         this.#connection = mysql.createConnection({
           host: host,
           user: user,
@@ -39,51 +41,17 @@ class Database {
     });
   }
 
-  fetchSources(collector_id) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const res = await this.query(`
-        SELECT id, name, url_start
-        FROM sources
-        ${collector_id ? "WHERE collector_id = 1" : ""}`);
-        resolve(res);
-      } catch (err) {
-        reject(err);
-      }
-    });
-  }
+  async verifySize() {
+    const databaseSizeSql = `SELECT table_schema "name",
+               ROUND(SUM(data_length + index_length) / 1024 / 1024, 1) "size"
+               FROM information_schema.tables
+               GROUP BY table_schema;`;
 
-  async insertMemes(memesToBeInserted) {
-    let memes;
-    if (!Array.isArray(memesToBeInserted)) {
-      memes = [memesToBeInserted];
-    } else {
-      memes = memesToBeInserted;
-    }
-
-    const sqlFormatedMemes = memes.map((meme) => {
-      if (!meme.url)
-        throw new Error(`${meme.url} is not a valid url for a meme`);
-      if (!meme.type)
-        throw new Error(`${meme.type} is not a valid type for a meme`);
-      if (!meme.sourceId)
-        throw new Error(`${meme.sourceId} is not a valid sourceId for a meme`);
-
-      return `('${meme.type}', '${meme.url}', ${meme.sourceId})`;
-    });
-
-    const memesSql = `
-    insert into memes (type, url, source_id)
-    values
-    ${sqlFormatedMemes.join(",\n    ")}
-    `;
-
-    try {
-      const insertedMemes = await this.query(memesSql);
-      console.log(insertedMemes);
-    } catch (err) {
-      throw err;
-    }
+    const res = await this.query(databaseSizeSql);
+    const currentDatabaseSize = res.filter(
+      (db) => (db.name = this.#database)
+    )[0].size;
+    console.log(`Current Database Size: ${currentDatabaseSize}`);
   }
 }
 

@@ -19,6 +19,7 @@ class Api {
     try {
       await db.setUp(this.#dbCredentials);
       console.log("db running");
+      db.verifySize();
     } catch (err) {
       throw new Error("db not running");
     }
