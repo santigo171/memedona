@@ -3,7 +3,7 @@ const router = express.Router();
 
 import { db } from "../../Database.js";
 
-const brandsSqlSelect = `select start_date as startDate, end_date as endDate, color, logo_url as logoUrl from brands`;
+const brandsSqlSelect = `select start_date as startDate, end_date as endDate, color, logo_url as logoUrl, id from brands`;
 
 router.get("/", async (req, res) => {
   const brands = await db.query(`${brandsSqlSelect};`);
@@ -43,7 +43,7 @@ router.post("/", async (req, res) => {
       .send({ message: "dates must be send in YYYY/MM/DD format" });
 
   const newBrandSql = `insert into brands (start_date, end_date, color, logo_url)
-  values ("${formatedStartDate}", "${formatedEndDate}", "${color}", "${logoUrl}")
+  values ("${startDate}", "${endDate}", "${color}", "${logoUrl}")
   `;
   try {
     const dbRes = await db.query(newBrandSql);
@@ -64,7 +64,7 @@ router.delete("/:id", async (req, res) => {
 
   if (!id) return res.status(400).send({ message: "Must send an Id" });
 
-  const fetchBrandSql = `select * from brands where brandsid`;
+  const fetchBrandSql = `select * from brands where brands.id = ${id}`;
 
   const brand = db.query(fetchBrandSql);
   if (!brand)
