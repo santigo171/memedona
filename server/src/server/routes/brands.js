@@ -1,8 +1,6 @@
 import express from "express";
 const router = express.Router();
 
-import moment from "moment";
-
 import { db } from "../../Database.js";
 
 const brandsSqlSelect = `select start_date as startDate, end_date as endDate, color, logo_url as logoUrl from brands`;
@@ -36,13 +34,13 @@ router.post("/", async (req, res) => {
     });
   }
 
-  const formatedStartDate = moment(new Date(startDate)).format("YYYY-MM-DD");
-  const formatedEndDate = moment(new Date(endDate)).format("YYYY-MM-DD");
+  const formatedStartDate = new Date(startDate);
+  const formatedEndDate = new Date(endDate);
 
   if (formatedStartDate == "Invalid date" || formatedEndDate == "Invalid date")
     return res
       .status(400)
-      .send({ message: "dates must be send in MM/DD/YYYY format" });
+      .send({ message: "dates must be send in YYYY/MM/DD format" });
 
   const newBrandSql = `insert into brands (start_date, end_date, color, logo_url)
   values ("${formatedStartDate}", "${formatedEndDate}", "${color}", "${logoUrl}")

@@ -2,7 +2,7 @@ import { db } from "./Database.js";
 
 class MemeCollector {
   #MAX_MEMES_TO_BE_INSERTED = 1;
-  #MAX_INSERTED_MEMES_URL = 10;
+  #MAX_INSERTED_MEMES_URL = 20;
 
   constructor({ collector, collectorIdInDb }) {
     this.collector = collector;
@@ -16,7 +16,7 @@ class MemeCollector {
   }
 
   destroy() {
-    throw new Error("No stop function");
+    throw new Error("No destroy function");
   }
 
   run() {

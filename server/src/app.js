@@ -40,6 +40,13 @@ class Api {
     });
   }
 
+  async destroyCollectors() {
+    this.runningCollectors.forEach(async (collectorInstance) => {
+      await collectorInstance.destroy();
+    });
+    this.runningCollectors = [];
+  }
+
   async runRestApi() {
     server.setUp(this.#serverCredentials);
     await server.run();
@@ -51,9 +58,9 @@ class Api {
     console.log("server stopped");
   }
 
-  run() {
+  run(restartDelay) {
     this.runDb();
-    this.runCollectors();
+    setTimeout(() => this.runCollectors(), restartDelay);
     this.runRestApi();
   }
 
@@ -61,9 +68,9 @@ class Api {
     this.#stopRestApi();
   }
 
-  resetCollectors() {
-    this.runningCollectors = [];
-    this.runCollectors();
+  async resetCollectors() {
+    await this.destroyCollectors();
+    await this.runCollectors();
   }
 }
 
@@ -93,12 +100,12 @@ const serverCredentials = {
 
 let api;
 
-function run() {
+function run(restartDelay) {
   console.log("Starting Memedona Server!!!");
   if (Boolean(process.env.DEBUG_MODE))
     console.log(`Debugging Mode, client url: ${process.env.DEBUG_CLIENT_URL}`);
   api = new Api(collectors, dbCredentials, serverCredentials);
-  api.run();
+  api.run(restartDelay);
 }
 
 function stop() {
@@ -107,4 +114,9 @@ function stop() {
   api = undefined;
 }
 
-export { run, stop };
+function resetCollectors() {
+  console.log("Reseting Memedona Collectors!!!");
+  api.resetCollectors();
+}
+
+export { run, stop, resetCollectors };
