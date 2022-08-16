@@ -23,38 +23,8 @@ const memesSqlSelectAndJoin = `
   join collectors on sources.collector_id = collectors.id
 `;
 
-function range(start, end) {
-  const array = [];
-  for (let i = start; i <= end; i++) {
-    array.push(i);
-  }
-  return array;
-}
-
-function formatExclude(exclude) {
-  // const flatExcludeArray = exclude
-  //   .flatMap((item) => {
-  //     if (Array.isArray(item)) {
-  //       return range(item[0], item[1]);
-  //     } else {
-  //       return [item];
-  //     }
-  //   })
-  //   .sort((a, b) => a - b)
-  //   .filter((item, index, array) => array.indexOf(item) === index);
-
-  // let newExcludeArray = flatExcludeArray.reduce(
-  //   (accumulator, actualValue, index, array) => {
-  //     console.log(accumulator);
-  //     return accumulator.push(actualValue);
-  //   },
-  //   []
-  // );
-  return exclude;
-}
-
 router.get("/", fullUrlMiddleware, async (req, res) => {
-  const limit = parseInt(req.query.limit) || 5;
+  const limit = parseInt(req.query["limit"]) || 5;
 
   // Exclude
   let exclude;
@@ -85,7 +55,7 @@ router.get("/", fullUrlMiddleware, async (req, res) => {
         } else if (typeof item[0] !== "number" || typeof item[1] !== "number") {
           valid = false;
           res.status(400).send({
-            message: "Error: Must send numbers in exlude parameter",
+            message: "Error: Must send numbers in exclude parameter",
           });
         } else if (max - min > 100) {
           valid = false;
@@ -102,7 +72,6 @@ router.get("/", fullUrlMiddleware, async (req, res) => {
       }
     });
   if (!valid) return;
-  if (exclude) formatExclude(exclude);
 
   // Topic Id
   let topicId = parseInt(req.query["topic-id"]);
@@ -182,8 +151,8 @@ router.get("/:memeId", async (req, res) => {
 
 router.patch("/:memeId", async (req, res) => {
   const { memeId } = req.params;
-  const likes = parseInt(req.body.likes) || 0;
-  const shares = parseInt(req.body.shares) || 0;
+  const likes = parseInt(req.body["likes"]) || 0;
+  const shares = parseInt(req.body["shares"]) || 0;
 
   if (likes || shares) {
     if (likes > 1 || shares > 1 || likes < 0 || shares < 0) {
@@ -216,6 +185,25 @@ router.patch("/:memeId", async (req, res) => {
       .status(404)
       .send({ message: `Error: Meme with id ${memeId} not found` });
   }
+});
+
+router.post("/", async (req, res) => {
+  const type = req.body["type"];
+  const sourceId = req.body["source-id"];
+  const url = req.body["url"];
+  const topicId = req.body["topic-id"];
+
+  const memeSql = topicId
+    ? `insert into memes (type, url, source_id, topic_id)
+                   values('${type}', '${url}', ${sourceId}, ${topicId})`
+    : `insert into memes (type, url, source_id)
+                   values('${type}', '${url}', ${sourceId})`;
+
+  const dbRes = await db.query(memeSql);
+
+  res.status(201).send({
+    dbRes,
+  });
 });
 
 export { router };

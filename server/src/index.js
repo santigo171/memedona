@@ -1,32 +1,58 @@
-// import { run, stop, resetCollectors } from "./app.js";
-import { run, resetCollectors } from "./app.js";
+// dotenv
+import { config as dotenvConfig } from "dotenv";
+dotenvConfig();
 
-// const restartDelay = parseInt(process.env.RESTART_DELAY_SEC) * 1000;
+// Modules
+import { db } from "./Database.js";
+import { server } from "./server/server.js";
 
-function reset() {
-  resetCollectors();
+class Api {
+  #dbCredentials;
+  #serverCredentials;
+
+  constructor(dbCredentials, serverCredentials) {
+    this.#dbCredentials = dbCredentials;
+    this.#serverCredentials = serverCredentials;
+  }
+
+  async runDb() {
+    try {
+      await db.setUp(this.#dbCredentials);
+      console.log("db running");
+    } catch (err) {
+      throw new Error("db not running");
+    }
+  }
+
+  async runRestApi() {
+    server.setUp(this.#serverCredentials);
+    await server.run();
+    console.log("server running");
+  }
+
+  run() {
+    this.runDb();
+    this.runRestApi();
+  }
 }
 
-run(0);
+const dbCredentials = {
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+};
 
-process.on("uncaughtException", async (err) => {
-  console.log("\nUNCAUGHT EXCEPTION");
-  if (err.message == "db not running") {
-    console.log("Db not running");
-    process.exit();
-  } else if (
-    err.message == "Cannot read properties of undefined (reading 'cache')"
-  ) {
-    console.log("Undefined cache ;(");
-    reset();
-  } else if (err.code == "ER_DUP_ENTRY") {
-    console.log(err);
-    console.log("Duplicate entry ;(");
-    reset();
-  } else {
-    console.log(err);
-    console.log(err.code);
+const serverCredentials = {
+  port: process.env.SERVER_PORT || 5000,
+  corsWhitelist: Boolean(process.env.DEBUG_MODE)
+    ? [process.env.DEBUG_CLIENT_URL]
+    : ["https://memedona.com", "https://www.memedona.com"],
+};
 
-    process.exit();
-  }
-});
+console.log("Starting Memedona Server!!!");
+if (Boolean(process.env.DEBUG_MODE))
+  console.log(`Debugging Mode, client url: ${process.env.DEBUG_CLIENT_URL}`);
+
+const api = new Api(dbCredentials, serverCredentials);
+api.run();

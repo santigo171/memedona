@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
 
   const startDate = req.body["start-date"];
   const endDate = req.body["end-date"];
-  const color = req.body.color;
+  const color = req.body["color"];
   const logoUrl = req.body["logo-url"];
 
   if (startDate || endDate || color || logoUrl) {
@@ -55,7 +55,7 @@ router.post("/", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   const adminPassword = String(process.env.ADMIN_PASSWORD);
-  const enteredPassword = String(req.headers.password);
+  const enteredPassword = String(req.headers["password"]);
 
   if (adminPassword !== enteredPassword)
     return res.status(401).send({ message: "Unauthorized" });
