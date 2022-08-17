@@ -45,7 +45,7 @@ const dbCredentials = {
 };
 
 const serverCredentials = {
-  port: process.env.SERVER_PORT || 5000,
+  port: process.env.PORT || 5000,
   corsWhitelist: Boolean(process.env.DEBUG_MODE)
     ? [process.env.DEBUG_CLIENT_URL]
     : ["https://memedona.com", "https://www.memedona.com"],
