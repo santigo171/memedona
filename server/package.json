@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
-    "test": "nodemon ."
+    "test": "nodemon .",
+    "deploy": "git push heroku main"
   },
   "keywords": [],
   "author": "",
