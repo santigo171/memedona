@@ -21,7 +21,7 @@ class Api {
       console.log("db running");
       db.verifySize();
     } catch (err) {
-      throw new Error("db not running");
+      throw new Error(`db not running ${err}`);
     }
   }
 

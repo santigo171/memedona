@@ -48,10 +48,10 @@ class Database {
                GROUP BY table_schema;`;
 
     const res = await this.query(databaseSizeSql);
-    const currentDatabaseSize = res.filter(
-      (db) => (db.name = this.#database)
-    )[0].size;
-    console.log(`Current Database Size: ${currentDatabaseSize}`);
+    const currentDatabase = res.filter((db) => db.name === this.#database)[0];
+    console.log(
+      `Current Database (${currentDatabase.name}) Size: ${currentDatabase.size}MB`
+    );
   }
 }
 
