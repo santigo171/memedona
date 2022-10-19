@@ -1,11 +1,11 @@
+// File system
 import * as fs from "fs";
-
 import path from "path";
 const __dirname = path.resolve();
 
+// Api
 import express from "express";
 const router = express.Router();
-
 import * as cors from "cors";
 
 const isChildOf = (child, parent) => {

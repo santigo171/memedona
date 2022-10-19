@@ -76,8 +76,8 @@ router.get("/", fullUrlMiddleware, async (req, res) => {
   // Topic Id
   let topicId = parseInt(req.query["topic-id"]);
 
-  const orderBySql = topicId == 2 ? "popularity desc" : "date desc";
-  if (topicId == 1 || topicId == 2) topicId = undefined;
+  const orderBySql = topicId === 2 ? "popularity desc" : "date desc"; // If topicId is 2 (Most popular) memes will be shorted by popularity, else they will be shorted by date (No matter the topic)
+  if (topicId === 1 || topicId === 2) topicId = undefined;
 
   // Type
   let type = req.query["type"];
@@ -138,17 +138,6 @@ router.get("/:memeId", async (req, res) => {
   res.status(200).send(memes);
 });
 
-router.get("/:memeId", async (req, res) => {
-  const { memeId } = req.params;
-
-  const memesSql = `
-  ${memesSqlSelectAndJoin}  
-  where memes.id = ${memeId}`;
-
-  const memes = await db.query(memesSql);
-  res.status(200).send(memes);
-});
-
 router.patch("/:memeId", async (req, res) => {
   const { memeId } = req.params;
   const likes = parseInt(req.body["likes"]) || 0;
@@ -188,6 +177,12 @@ router.patch("/:memeId", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  const adminPassword = String(process.env.COLLECTORS_PASSWORD);
+  const enteredPassword = String(req.headers["password"]);
+
+  if (adminPassword !== enteredPassword)
+    return res.status(401).send({ message: "Unauthorized" });
+
   const type = req.body["type"];
   const sourceId = req.body["source-id"];
   const url = req.body["url"];
@@ -199,11 +194,17 @@ router.post("/", async (req, res) => {
     : `insert into memes (type, url, source_id)
                    values('${type}', '${url}', ${sourceId})`;
 
-  const dbRes = await db.query(memeSql);
+  try {
+    const dbRes = await db.query(memeSql);
 
-  res.status(201).send({
-    dbRes,
-  });
+    res.status(201).send({
+      message: dbRes,
+    });
+  } catch (err) {
+    res.status(400).send({
+      message: err,
+    });
+  }
 });
 
 export { router };

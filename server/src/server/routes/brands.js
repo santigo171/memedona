@@ -53,6 +53,21 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/current", async (req, res) => {
+  const brands = await db.query(
+    `${brandsSqlSelect}
+    where now() between brands.start_date and brands.end_date
+    order by brands.end_date
+    limit 1;`
+  );
+
+  if (brands.length > 0) {
+    res.status(200).send(brands[0]);
+  } else {
+    res.status(404).send({ message: "No current brand found" });
+  }
+});
+
 router.delete("/:id", async (req, res) => {
   const adminPassword = String(process.env.ADMIN_PASSWORD);
   const enteredPassword = String(req.headers["password"]);
@@ -71,24 +86,9 @@ router.delete("/:id", async (req, res) => {
     return res.status(400).send({ message: `Brand with ${id} doesn't exits` });
 
   const deleteBrandSql = `delete from brands where brands.id = ${id}`;
-  const brandRes = db.query(deleteBrandSql);
+  const brandRes = await db.query(deleteBrandSql);
 
   res.status(202).send({ message: brandRes });
-});
-
-router.get("/current", async (req, res) => {
-  const brands = await db.query(
-    `${brandsSqlSelect}
-    where now() between brands.start_date and brands.end_date
-    order by brands.end_date
-    limit 1;`
-  );
-
-  if (brands.length > 0) {
-    res.status(200).send(brands[0]);
-  } else {
-    res.status(404).send({ message: "No current brand found" });
-  }
 });
 
 export { router };

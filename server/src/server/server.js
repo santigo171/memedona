@@ -9,10 +9,15 @@ import { router as memesRouter } from "./routes/memes.js";
 import { router as topicRouter } from "./routes/topics.js";
 
 function fullUrlMiddleware(req, res, next) {
-  req.fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
-  req.noParamsUrl =
-    req.protocol + "://" + req.get("host") + req.originalUrl.split("?").shift();
+  let fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
+  if (fullUrl.slice(-1) === "/") {
+    req.fullUrl = fullUrl.slice(0, -1);
+  } else {
+    req.fullUrl = fullUrl;
+  }
   next();
+  // req.noParamsUrl =
+  //   req.protocol + "://" + req.get("host") + req.originalUrl.split("?").shift();
 }
 
 function updateQueryStringParameter(uri, key, value) {
@@ -44,13 +49,11 @@ class Server {
   run() {
     return new Promise((resolve) => {
       const app = this.#app;
-
       app.use(express.json());
-
       app.use(
         cors.default({
           origin: (origin, callback) => {
-            if (this.#corsWhitelist.indexOf(origin) !== -1 || !origin) {
+            if (this.#corsWhitelist.indexOf(origin) !== -1) {
               callback(null, true);
             } else {
               callback(null, false);
@@ -62,8 +65,8 @@ class Server {
       app.get("/", fullUrlMiddleware, (req, res) => {
         res.status(200).send({
           entrypoints: {
-            v1: `${req.fullUrl}v1`,
-            assets: `${req.fullUrl}assets`,
+            v1: `${req.fullUrl}/v1`,
+            assets: `${req.fullUrl}/assets`,
           },
         });
       });
@@ -84,14 +87,12 @@ class Server {
     const v1Router = this.#v1Router;
 
     v1Router.get("/", fullUrlMiddleware, (req, res) => {
-      const { fullUrl } = req;
-
       res.status(200).send({
         entrypoints: {
-          brands: `${fullUrl}brands`,
-          collectors: `${fullUrl}collectors`,
-          memes: `${fullUrl}memes`,
-          topics: `${fullUrl}topics`,
+          brands: `${req.fullUrl}/brands`,
+          collectors: `${req.fullUrl}/collectors`,
+          memes: `${req.fullUrl}/memes`,
+          topics: `${req.fullUrl}/topics`,
         },
       });
     });
