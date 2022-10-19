@@ -2,11 +2,18 @@
   "name": "memecollector",
   "version": "1.0.0",
   "description": "",
-  "main": "DiscordCollector.js",
+  "main": "src/index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "test": "nodemon .",
+    "deploy": "git push heroku main"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^14.2.0"
+  }
 }
