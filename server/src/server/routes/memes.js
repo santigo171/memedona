@@ -120,6 +120,7 @@ router.get("/", fullUrlMiddleware, async (req, res) => {
     JSON.stringify(newExclude)
   );
   if (topicId) next = updateQueryStringParameter(next, "topic-id", topicId);
+  next = next.replace("http", "https");
 
   res.status(200).send({
     next,
