@@ -1,7 +1,11 @@
 import express from "express";
 
 import { db } from "../../Database.js";
-import { fullUrlMiddleware, updateQueryStringParameter } from "../server.js";
+import {
+  fullUrlMiddleware,
+  collectorsPasswordMiddleware,
+  updateQueryStringParameter,
+} from "../server.js";
 
 const router = express.Router();
 
@@ -177,13 +181,7 @@ router.patch("/:memeId", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
-  const adminPassword = String(process.env.COLLECTORS_PASSWORD);
-  const enteredPassword = String(req.headers["password"]);
-
-  if (adminPassword !== enteredPassword)
-    return res.status(401).send({ message: "Unauthorized" });
-
+router.post("/", collectorsPasswordMiddleware, async (req, res) => {
   const type = req.body["type"];
   const sourceId = req.body["source-id"];
   const url = req.body["url"];

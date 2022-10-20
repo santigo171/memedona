@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 
 import { db } from "../../Database.js";
+import { adminPasswordMiddleware } from "../server.js";
 
 const brandsSqlSelect = `select start_date as startDate, end_date as endDate, color, logo_url as logoUrl, id from brands`;
 
@@ -10,13 +11,7 @@ router.get("/", async (req, res) => {
   res.status(200).send(brands);
 });
 
-router.post("/", async (req, res) => {
-  const adminPassword = String(process.env.ADMIN_PASSWORD);
-  const enteredPassword = String(req.headers.password);
-
-  if (adminPassword !== enteredPassword)
-    return res.status(401).send({ message: "Unauthorized" });
-
+router.post("/", adminPasswordMiddleware, async (req, res) => {
   const startDate = req.body["start-date"];
   const endDate = req.body["end-date"];
   const color = req.body["color"];
@@ -68,13 +63,7 @@ router.get("/current", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
-  const adminPassword = String(process.env.ADMIN_PASSWORD);
-  const enteredPassword = String(req.headers["password"]);
-
-  if (adminPassword !== enteredPassword)
-    return res.status(401).send({ message: "Unauthorized" });
-
+router.delete("/:id", adminPasswordMiddleware, async (req, res) => {
   const id = req.params.id;
 
   if (!id) return res.status(400).send({ message: "Must send an Id" });

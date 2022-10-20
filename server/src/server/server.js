@@ -16,8 +16,22 @@ function fullUrlMiddleware(req, res, next) {
     req.fullUrl = fullUrl;
   }
   next();
-  // req.noParamsUrl =
-  //   req.protocol + "://" + req.get("host") + req.originalUrl.split("?").shift();
+}
+
+function passwordMiddleware(req, res, next, validPassword) {
+  const enteredPassword = String(req.headers["password"]);
+
+  if (String(validPassword) !== String(enteredPassword)) {
+    return res.status(401).send({ message: "Unauthorized" });
+  } else {
+    next();
+  }
+}
+function adminPasswordMiddleware(req, res, next) {
+  passwordMiddleware(req, res, next, process.env.ADMIN_PASSWORD);
+}
+function collectorsPasswordMiddleware(req, res, next) {
+  passwordMiddleware(req, res, next, process.env.COLLECTORS_PASSWORD);
 }
 
 function updateQueryStringParameter(uri, key, value) {
@@ -106,4 +120,10 @@ class Server {
 
 const server = new Server();
 
-export { server, fullUrlMiddleware, updateQueryStringParameter };
+export {
+  server,
+  fullUrlMiddleware,
+  adminPasswordMiddleware,
+  collectorsPasswordMiddleware,
+  updateQueryStringParameter,
+};
