@@ -6,7 +6,8 @@ import { router as brandRouter } from "./routes/brands.js";
 import { router as assetsRouter } from "./routes/assets.js";
 import { router as collectorRouter } from "./routes/collectors.js";
 import { router as memesRouter } from "./routes/memes.js";
-import { router as topicRouter } from "./routes/topics.js";
+import { router as sourcesRouter } from "./routes/sources.js";
+import { router as topicsRouter } from "./routes/topics.js";
 
 function fullUrlMiddleware(req, res, next) {
   let fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
@@ -106,6 +107,7 @@ class Server {
           brands: `${req.fullUrl}/brands`,
           collectors: `${req.fullUrl}/collectors`,
           memes: `${req.fullUrl}/memes`,
+          sources: `${req.fullUrl}/sources`,
           topics: `${req.fullUrl}/topics`,
         },
       });
@@ -114,7 +116,8 @@ class Server {
     v1Router.use("/brands", brandRouter);
     v1Router.use("/collectors", collectorRouter);
     v1Router.use("/memes", memesRouter);
-    v1Router.use("/topics", topicRouter);
+    v1Router.use("/sources", sourcesRouter);
+    v1Router.use("/topics", topicsRouter);
   }
 }
 
