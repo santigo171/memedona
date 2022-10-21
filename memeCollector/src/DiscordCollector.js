@@ -2,9 +2,9 @@
 import { Client } from "discord.js";
 
 // classes and functions
-import { MemeCollector } from "../MemeCollector.js";
-import { getFileType } from "../util/getFileType.js";
-import { db } from "../Database.js";
+import { MemeCollector } from "./MemeCollector.js";
+import { getFileType } from "./util/getFileType.js";
+import { getSources } from "./apiRequests.js";
 
 class DiscordCollector extends MemeCollector {
   #client;
@@ -32,7 +32,7 @@ class DiscordCollector extends MemeCollector {
 
   #getMemesChannelsIds() {
     return new Promise(async (resolve) => {
-      this.#sources = await db.fetchSources(this.collectorIdInDb);
+      this.#sources = await getSources(this.collectorIdInDb);
       const memesChannelsIds = this.#sources.flatMap((source) =>
         source.url_start.substring(0, source.url_start.length - 1)
       );
