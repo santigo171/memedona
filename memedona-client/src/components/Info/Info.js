@@ -100,7 +100,11 @@ function Info() {
       </section>
       <section>
         Some icons created by{" "}
-        <a href="https://www.flaticon.com/free-icons/info" title="info icons">
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://www.flaticon.com/free-icons/info"
+        >
           Stockio - Flaticon
         </a>
       </section>
