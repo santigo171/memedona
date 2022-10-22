@@ -15,6 +15,7 @@ html {
 }
 
 body {
+  font-family: $primary-font;
   overflow-x: hidden;
 }
 
@@ -37,4 +38,13 @@ input[type="reset"] {
   font: inherit;
   cursor: pointer;
   outline: inherit;
+}
+
+a {
+  color: $link-color;
+  text-decoration: inherit; /* no underline */
+}
+
+img {
+  width: 100%;
 }

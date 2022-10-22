@@ -43,7 +43,7 @@
 
 @media only screen and (min-width: $tablet-breakpoint) {
   .LoadingMoreMemes {
-    width: $meme-max-width--tablet;
+    width: $content-max-width--tablet;
   }
   .LoadingMoreMemes__content__img {
     width: $loading-memes-img-size--tablet;
@@ -59,7 +59,7 @@
 
 @media only screen and (min-width: $laptop-breakpoint) {
   .LoadingMoreMemes {
-    width: $meme-max-width--laptop;
+    width: $content-max-width--laptop;
   }
 }
 

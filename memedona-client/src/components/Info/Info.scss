@@ -1,0 +1,97 @@
+@import "../../library/scss/partials/variables";
+
+.Info {
+  width: $content-max-width;
+  padding: 20px 25px 0 25px;
+
+  font-weight: 400;
+  font-size: $info-font-size;
+  color: $primary-font-color;
+}
+
+.light {
+  font-weight: 300;
+}
+
+.text-margin {
+  margin: $text-margin 0;
+}
+
+section {
+  margin-top: 30px;
+}
+
+p {
+  @extend .text-margin;
+}
+
+h3 {
+  @extend .text-margin;
+  @extend .light;
+  font-size: $info-title-font-size;
+}
+
+h4 {
+  @extend .text-margin;
+  font-family: $secondary-font;
+  font-weight: normal;
+  font-size: $info-setting-option-font-size;
+}
+
+// Setting Option
+.Setting__option {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: $info-icon-size auto;
+}
+
+.Setting__option__h4 {
+  padding-left: 15px;
+}
+
+.Setting__option__icon {
+  justify-self: center;
+  align-self: center;
+  transform: rotate(-90deg);
+}
+
+// ChangeLogRecord
+.ChangeLogRecord {
+  @extend .text-margin;
+}
+
+.ChangeLogRecord > * {
+  display: inline;
+}
+
+.ChangeLogRecord__version {
+  margin-right: 10px;
+  font-family: $secondary-font;
+}
+
+@media only screen and (min-width: $optional-breakpoint) {
+  .Setting--half {
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+
+  .Setting--half--unequal {
+    display: grid;
+    grid-template-columns: calc(60% - 20px) 40%;
+    gap: 20px;
+    align-items: center;
+  }
+}
+
+@media only screen and (min-width: $tablet-breakpoint) {
+  .Info {
+    padding: 20px 0;
+    width: $content-max-width--tablet;
+  }
+}
+
+@media only screen and (min-width: $laptop-breakpoint) {
+  .Info {
+    width: $content-max-width--laptop;
+  }
+}

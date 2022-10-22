@@ -33,7 +33,7 @@
   .TopicList {
     height: $topic-size--tablet;
     top: $header-size--tablet;
-    width: $meme-max-width--tablet;
+    width: $content-max-width--tablet;
   }
   .Arrow {
     font-size: $arrow-font-size--tablet;
@@ -42,6 +42,6 @@
 
 @media only screen and (min-width: $laptop-breakpoint) {
   .TopicList {
-    width: $meme-max-width--laptop;
+    width: $content-max-width--laptop;
   }
 }

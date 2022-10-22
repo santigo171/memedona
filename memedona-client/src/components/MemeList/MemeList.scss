@@ -2,7 +2,7 @@
 
 .MemeList {
   margin-top: $topic-size;
-  max-width: $meme-max-width;
+  max-width: $content-max-width;
   height: auto;
   background-color: $primary-background-color;
 }
@@ -10,12 +10,12 @@
 @media only screen and (min-width: $tablet-breakpoint) {
   .MemeList {
     margin-top: $topic-size--tablet;
-    max-width: $meme-max-width--tablet;
+    max-width: $content-max-width--tablet;
   }
 }
 
 @media only screen and (min-width: $laptop-breakpoint) {
   .MemeList {
-    max-width: $meme-max-width--laptop;
+    max-width: $content-max-width--laptop;
   }
 }

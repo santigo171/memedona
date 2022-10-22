@@ -2,11 +2,16 @@ import React from "react";
 
 import { MemedonaContext } from "../../MemedonaContext";
 import defaultLogoUrl from "../../assets/img/defaultLogo.png";
+import infoIcon from "../../assets/img/icons/info.png";
 
 import "./Header.scss";
 
 function Header() {
-  const { logoProps: contextLogoProps } = React.useContext(MemedonaContext);
+  const {
+    logoProps: contextLogoProps,
+    showInfo,
+    setShowInfo,
+  } = React.useContext(MemedonaContext);
 
   const logoProps = contextLogoProps || {};
   logoProps.url = logoProps.url || defaultLogoUrl;
@@ -24,9 +29,25 @@ function Header() {
             alt="Memedona Logo"
           />
         </div>
-        <p style={headerTextStyle} className="Header__container__text">
+        <h1 style={headerTextStyle} className="Header__container__text">
           Memedona
-        </p>
+        </h1>
+        <div className="Header__container__info">
+          <button
+            onClick={() => {
+              setShowInfo(!showInfo);
+            }}
+          >
+            {!showInfo && (
+              <img
+                className="Header__container__info__img"
+                src={infoIcon}
+                alt="Info icon"
+              />
+            )}
+            {showInfo && <span className="Header__container__info__x">X</span>}
+          </button>
+        </div>
       </div>
     </header>
   );

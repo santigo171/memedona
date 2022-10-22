@@ -16,6 +16,7 @@ function MemedonaProvider({ children }) {
   const [error, setError] = React.useState(false);
   const [videosMuted, setVideosMuted] = React.useState(true);
   const [showA2HS, setShowA2HS] = React.useState(false);
+  const [showInfo, setShowInfo] = React.useState(false);
 
   React.useEffect(() => {
     initialConsumeApi();
@@ -90,6 +91,8 @@ function MemedonaProvider({ children }) {
         setVideosMuted,
         showA2HS,
         setShowA2HS,
+        showInfo,
+        setShowInfo,
       }}
     >
       {children}

@@ -1,3 +1,5 @@
+// @import "../../library/scss/partials/variables";
+
 // General
 $primary-background-color: #0c0c0c;
 $secondary-background-color: #0c0c0cc0;
@@ -7,16 +9,27 @@ $secondary-font-color: #8d8d8d;
 
 $primary-font: "Roboto", sans-serif;
 $secondary-font: "Minecraft", sans-serif;
+$text-margin: 9px;
 
 $brand-color: #fb903c;
+
 $button-brand-color: #e57a26;
 $button-hover-brand-color: #f7842c;
 $button-radius: 5px;
-$link-brand-color: #ffb377;
+
+$link-color: #ffb377;
 
 // Breakpoints
+$optional-breakpoint: 360px;
 $tablet-breakpoint: 570px;
 $laptop-breakpoint: 1100px;
+
+$content-max-width: 100vw;
+$content-max-width--tablet: 500px;
+$content-max-width--laptop: 600px;
+
+// @media only screen and (min-width: $optional-breakpoint) {
+// }
 
 // @media only screen and (min-width: $tablet-breakpoint) {
 // }
@@ -34,7 +47,8 @@ $header-font-size--tablet: 2.9rem;
 $header-logo-size: 35px;
 $header-logo-size--tablet: 55px;
 
-$header-container-max-width: 500px;
+$info-icon-size: 360px;
+$info-icon-size--tablet: 35px;
 
 $header-border-color: #fff;
 $header-border-size: 1px;
@@ -51,10 +65,6 @@ $arrow-font-size--tablet: 4rem;
 $arrow-color: #fff;
 
 // Meme
-$meme-max-width: 100vw;
-$meme-max-width--tablet: 500px;
-$meme-max-width--laptop: 600px;
-
 $meme-header-font-size: 2rem;
 $meme-header-font-size--tablet: 2.3rem;
 
@@ -74,11 +84,17 @@ $loading-memes-img-rotation-speed: 3s;
 $loading-memes-img-size: 150px;
 $loading-memes-img-size--tablet: 150px;
 
-//Add To Home Screen
+// Add To Home Screen
 $a2hs-padding: 20px;
 $a2hs-height: 450px;
 $a2hs-X-height: 30px;
 $a2hs-img-height: 250px;
+
+// Info
+$info-font-size: 1.6rem;
+$info-title-font-size: 2.7rem;
+$info-setting-option-font-size: 1.9rem;
+$info-icon-size: 15px;
 
 .center {
   display: grid;
