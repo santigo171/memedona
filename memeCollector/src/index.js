@@ -3,7 +3,13 @@ import express from "express";
 
 const app = express();
 const port = process.env.PORT || 5000;
+
 app.use(express.json());
+
+app.use((req, res, next) => {
+  res.set("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 app.get("/", (req, res) => {
   res.status(200).send({
