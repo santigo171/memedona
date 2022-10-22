@@ -1,16 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.51c2cdd4.css",
-    "main.js": "/static/js/main.bacabefb.js",
+    "main.css": "/static/css/main.efcf48db.css",
+    "main.js": "/static/js/main.3aecd932.js",
     "service-worker.js": "/service-worker.js",
+    "static/media/1.jpg": "/static/media/1.7ea246811dd10c3ea1c7.jpg",
+    "static/media/4.jpg": "/static/media/4.82468741f0f364974a54.jpg",
+    "static/media/2.jpg": "/static/media/2.fb25a9b8f6cd639eecc3.jpg",
+    "static/media/5.jpg": "/static/media/5.5dc23711c59777c46d30.jpg",
+    "static/media/3.jpg": "/static/media/3.79408793b46efe60d40d.jpg",
     "static/media/Minecraft.ttf": "/static/media/Minecraft.81f6c7f882fcc2dee106.ttf",
     "static/media/defaultLogo.png": "/static/media/defaultLogo.3738577974f332d75908.png",
     "index.html": "/index.html",
-    "main.51c2cdd4.css.map": "/static/css/main.51c2cdd4.css.map",
-    "main.bacabefb.js.map": "/static/js/main.bacabefb.js.map"
+    "static/media/triangle.svg": "/static/media/triangle.6da5beae212cb4c495bbe61fc477804f.svg",
+    "main.efcf48db.css.map": "/static/css/main.efcf48db.css.map",
+    "main.3aecd932.js.map": "/static/js/main.3aecd932.js.map"
   },
   "entrypoints": [
-    "static/css/main.51c2cdd4.css",
-    "static/js/main.bacabefb.js"
+    "static/css/main.efcf48db.css",
+    "static/js/main.3aecd932.js"
   ]
 }
