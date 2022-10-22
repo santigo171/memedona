@@ -72,9 +72,6 @@ function MemedonaProvider({ children }) {
       newCurrentTopic.memes.push(...fetchedMemes.results);
       newCurrentTopic.nextFetchMoreMemesLink = fetchedMemes.next;
       setCurrentTopic(newCurrentTopic);
-
-      // console.log(topics[0].memes);
-      // console.log(topics[1].memes);
     }, 0);
   }
 

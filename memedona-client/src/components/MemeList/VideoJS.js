@@ -73,7 +73,7 @@ function VideoJS({ url }) {
     <div data-vjs-player>
       <video
         ref={videoRef}
-        playsinline
+        playsInline
         className="video-js vjs-big-play-centered"
       />
     </div>
