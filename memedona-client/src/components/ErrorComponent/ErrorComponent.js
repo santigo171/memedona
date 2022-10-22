@@ -2,7 +2,7 @@ import React from "react";
 
 import "./ErrorComponent.scss";
 
-import meme1 from "../../assets/img/meme1.jpg";
+import shrek from "../../assets/img/memes/shrek.jpg";
 
 function ErrorComponent() {
   function reloadPage() {
@@ -13,7 +13,7 @@ function ErrorComponent() {
     <div className="ErrorComponent">
       <img
         className="ErrorComponent__image"
-        src={meme1}
+        src={shrek}
         alt="A meme of shrek saying tumba la casa mami"
       />
       <div className="ErrorComponent__text">

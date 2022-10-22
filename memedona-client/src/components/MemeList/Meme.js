@@ -7,9 +7,9 @@ import { VideoJS } from "./VideoJS";
 
 import "./Meme.scss";
 
-import like_image from "../../assets/img/like.png";
-import share_image from "../../assets/img/share.png";
-import download_image from "../../assets/img/download.png";
+import like_image from "../../assets/img/icons/like.png";
+import share_image from "../../assets/img/icons/share.png";
+import download_image from "../../assets/img/icons/download.png";
 
 function Meme({ id, collectorId, source, likes, shares, type, url }) {
   const { collectors } = React.useContext(MemedonaContext);

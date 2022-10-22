@@ -2,7 +2,7 @@ import React from "react";
 
 import { MemedonaContext } from "../../MemedonaContext";
 
-import shaggy from "../../assets/img/shaggy.png";
+import shaggy from "../../assets/img/memes/shaggy.png";
 
 import "./A2HS.scss";
 
