@@ -24,7 +24,7 @@ function getSources(collectorIdInDb) {
 
 async function postMeme(meme) {
   try {
-    const res = await axios({
+    await axios({
       method: "post",
       url: "https://memedonaapi.herokuapp.com/v1/memes",
       headers: {
@@ -32,8 +32,8 @@ async function postMeme(meme) {
       },
       data: meme,
     });
-    console.log(`Meme inserted successfully: ` + meme);
-    console.log(res.data);
+    console.log(`Meme inserted successfully: `);
+    console.dir(meme);
   } catch (err) {
     console.dir(err, { depth: 10 });
   }

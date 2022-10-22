@@ -94,7 +94,6 @@ class DiscordCollector extends MemeCollector {
         }
         // get sourceId
         const { id: sourceId } = this.#getSourceByChannelId(message.channel.id);
-        console.log(sourceId);
         // collect
         this.collectMeme({
           url,
