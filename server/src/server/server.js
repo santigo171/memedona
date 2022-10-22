@@ -65,6 +65,7 @@ class Server {
     return new Promise((resolve) => {
       const app = this.#app;
       app.use(express.json());
+
       app.use(
         cors.default({
           origin: (origin, callback) => {
@@ -76,6 +77,11 @@ class Server {
           },
         })
       );
+
+      app.use((req, res, next) => {
+        res.set("Access-Control-Allow-Origin", "*");
+        next();
+      });
 
       app.get("/", fullUrlMiddleware, (req, res) => {
         res.status(200).send({
