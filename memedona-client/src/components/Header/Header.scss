@@ -40,16 +40,16 @@
 }
 
 .Header__container__info__img {
-  width: $info-icon-size;
+  width: $header-info-icon-size;
 }
 
 .Header__container__info__x {
   display: block;
 
-  width: $info-icon-size;
-  height: $info-icon-size;
+  width: $header-info-icon-size;
+  height: $header-info-icon-size;
 
-  line-height: $info-icon-size;
+  line-height: $header-info-icon-size;
   text-align: center;
   color: $primary-font-color;
   font-size: 2rem;
@@ -69,9 +69,9 @@
   }
   .Header__container__info__img,
   .Header__container__info__x {
-    width: $info-icon-size--tablet;
-    height: $info-icon-size--tablet;
-    line-height: $info-icon-size--tablet;
+    width: $header-info-icon-size--tablet;
+    height: $header-info-icon-size--tablet;
+    line-height: $header-info-icon-size--tablet;
   }
   .Header__container__text {
     font-size: $header-font-size--tablet;
