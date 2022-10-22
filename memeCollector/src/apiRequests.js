@@ -22,25 +22,21 @@ function getSources(collectorIdInDb) {
   });
 }
 
-function postMemes(memeArray) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      console.log(`Memes to be inserted: ${memeArray}`);
-      // const res = await axios({
-      //   method: "post",
-      //   url: "https://memedonaapi.herokuapp.com/v1/memes",
-      //   headers: {
-      //     password: COLLECTORS_PASSWORD,
-      //   },
-      //   data: {
-
-      //   }
-      // });
-      // resolve(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  });
+async function postMeme(meme) {
+  try {
+    const res = await axios({
+      method: "post",
+      url: "https://memedonaapi.herokuapp.com/v1/memes",
+      headers: {
+        password: COLLECTORS_PASSWORD,
+      },
+      data: meme,
+    });
+    console.log(`Meme inserted successfully: ` + meme);
+    console.log(res.data);
+  } catch (err) {
+    console.dir(err, { depth: 10 });
+  }
 }
 
-export { getSources, postMemes };
+export { getSources, postMeme };
