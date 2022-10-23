@@ -10,7 +10,7 @@ function VideoJS({ url }) {
   const { videosMuted, setVideosMuted } = React.useContext(MemedonaContext);
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
-  const onScreen = useOnScreen(videoRef, 0.6);
+  const onScreen = useOnScreen(videoRef, 0.8);
   const isTabVisible = usePageVisibility();
 
   // Mount PlayerRef
