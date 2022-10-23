@@ -128,6 +128,7 @@ router.get("/", fullUrlMiddleware, async (req, res) => {
 
   res.status(200).send({
     next,
+    exclude: newExclude,
     results: memes,
   });
 });
