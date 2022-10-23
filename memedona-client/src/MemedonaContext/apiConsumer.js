@@ -3,6 +3,10 @@ import { Request } from "./Request";
 class ApiConsumer {
   #apiUrl;
 
+  startCollector(collectorUrl) {
+    Request.get(collectorUrl);
+  }
+
   setApiUrl(apiUrl) {
     this.#apiUrl = apiUrl;
   }
