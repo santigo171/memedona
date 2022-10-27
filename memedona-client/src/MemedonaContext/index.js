@@ -10,25 +10,25 @@ const COLLECTOR_URL = process.env.REACT_APP_COLLECTOR_URL;
 const MemedonaContext = React.createContext();
 
 function MemedonaProvider({ children }) {
-  const {
-    item: memeExclude,
-    saveItem: saveMemeExclude,
-    loading: memeExcludeLoading,
-    error: memeExcludeError,
-  } = useLocalStorage("MEMEDONA_V1_EXCLUDE", []);
-  const {
-    item: lastMemeExclude,
-    saveItem: saveLastMemeExclude,
-    loading: lastMemeExcludeLoading,
-    error: lastMemeExcludeError,
-  } = useLocalStorage("MEMEDONA_V1_LAST_EXCLUDE", 0);
+  // const {
+  //   item: memeExclude,
+  //   saveItem: saveMemeExclude,
+  //   loading: memeExcludeLoading,
+  //   error: memeExcludeError,
+  // } = useLocalStorage("MEMEDONA_V1_EXCLUDE", []);
+  // const {
+  //   item: lastMemeExclude,
+  //   saveItem: saveLastMemeExclude,
+  //   loading: lastMemeExcludeLoading,
+  //   error: lastMemeExcludeError,
+  // } = useLocalStorage("MEMEDONA_V1_LAST_EXCLUDE", 0);
 
-  const {
-    item: installed,
-    saveItem: saveInstalled,
-    loading: installedLoading,
-    error: installedError,
-  } = useLocalStorage("MEMEDONA_V1_INSTALLED", false);
+  // const {
+  //   item: installed,
+  //   saveItem: saveInstalled,
+  //   loading: installedLoading,
+  //   error: installedError,
+  // } = useLocalStorage("MEMEDONA_V1_INSTALLED", false);
 
   const [logoProps, setLogoProps] = React.useState(undefined);
   const [collectors, setCollectors] = React.useState([]);
