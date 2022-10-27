@@ -2,7 +2,7 @@ import React from "react";
 
 import { changeFavicon } from "./changeFavicon";
 import { apiConsumer } from "./apiConsumer";
-import { useLocalStorage } from "./useLocalStorage";
+// import { useLocalStorage } from "./useLocalStorage";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const COLLECTOR_URL = process.env.REACT_APP_COLLECTOR_URL;
