@@ -3,8 +3,12 @@ import { Request } from "./Request";
 class ApiConsumer {
   #apiUrl;
 
-  startCollector(collectorUrl) {
-    Request.get(collectorUrl);
+  async startCollector(collectorUrl) {
+    try {
+      await Request.get(collectorUrl);
+    } catch (err) {
+      console.log("Couldn't activate collector");
+    }
   }
 
   setApiUrl(apiUrl) {
@@ -26,8 +30,7 @@ class ApiConsumer {
     return Request.get(url);
   }
 
-  getMemes(nextUrl, params) {
-    if (nextUrl) return Request.get(nextUrl);
+  getMemes(params) {
     const url = new URL(`${this.#apiUrl}/v1/memes`);
     for (let param in params) {
       url.searchParams.set(param, params[param]);
