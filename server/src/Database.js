@@ -7,9 +7,12 @@ class Database {
   #connect() {
     return new Promise((resolve, reject) => {
       this.#connection.getConnection((err, connection) => {
-        if (err) reject(err);
-        connection.release();
-        resolve();
+        if (err) {
+          reject(err);
+        } else {
+          connection.release();
+          resolve();
+        }
       });
     });
   }
