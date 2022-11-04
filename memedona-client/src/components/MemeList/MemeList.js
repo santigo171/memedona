@@ -10,7 +10,6 @@ function MemeList() {
   const { currentTopic, fetchMoreMemes } = React.useContext(MemedonaContext);
   let { memes } = currentTopic;
   if (!memes) memes = [];
-  if (memes.length < 5) fetchMoreMemes();
 
   return (
     <div className="MemeList">

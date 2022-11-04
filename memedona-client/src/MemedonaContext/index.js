@@ -8,7 +8,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 const COLLECTOR_URL = process.env.REACT_APP_COLLECTOR_URL;
 const MAX_LAST_MEME_EXCLUDE_MIN =
   process.env.REACT_APP_MAX_LAST_MEME_EXCLUDE_MIN;
-const MAX_LAST_MEME_EXCLUDE = MAX_LAST_MEME_EXCLUDE_MIN * 60000;
+const MAX_LAST_MEME_EXCLUDE = Number(MAX_LAST_MEME_EXCLUDE_MIN) * 60000;
 
 const MemedonaContext = React.createContext();
 
@@ -43,6 +43,7 @@ function MemedonaProvider({ children }) {
   const [showA2HS, setShowA2HS] = React.useState(false);
   const [showInfo, setShowInfo] = React.useState(false);
 
+  // Initial consume api
   React.useEffect(() => {
     initialConsumeApi();
   }, []);
@@ -80,6 +81,7 @@ function MemedonaProvider({ children }) {
     }
   }
 
+  // Meme fetching
   async function fetchMoreMemes() {
     console.log("Fetching memes");
     if (loading) return;
@@ -92,13 +94,20 @@ function MemedonaProvider({ children }) {
       now < lastMemeExclude + MAX_LAST_MEME_EXCLUDE &&
       currentTopic.id !== 2
     ) {
+      // Will search in localstorage exclude variable
       paramsToFetch.exclude = JSON.stringify(memeExclude);
     } else {
-      saveMemeExclude([]);
+      // Will search in currentTopic exclude variable
+      if (!currentTopic.exclude) currentTopic.exclude = [];
+      paramsToFetch.exclude = JSON.stringify(currentTopic.exclude);
     }
 
     const fetchedMemes = await apiConsumer.getMemes(paramsToFetch);
-    saveMemeExclude(fetchedMemes.exclude);
+    if (currentTopic.id !== 2) {
+      saveMemeExclude(fetchedMemes.exclude);
+    } else {
+      currentTopic.exclude = fetchedMemes.exclude;
+    }
     saveLastMemeExclude(Date.now());
 
     let newCurrentTopic = { ...currentTopic };
