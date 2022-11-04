@@ -94,6 +94,10 @@ function Info() {
       </section>
       <section>
         <h3>Change log</h3>
+        <ChangeLogRecord version="1.1.0">
+          2/11/22 🕞 Memedona will know which memes you already saw, so you
+          won't see them again if you close the app.
+        </ChangeLogRecord>
         <ChangeLogRecord version="1.0.0">
           EPIC DEPLOY AMONGUS BUN BUN LETS GO 💨😏🧵
         </ChangeLogRecord>
