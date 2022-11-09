@@ -28,10 +28,14 @@ function MemedonaProvider({ children }) {
 
   const {
     item: installed,
-    saveItem: saveInstalled,
+    saveItem: _saveInstalled,
     // loading: installedLoading,
     // error: installedError,
   } = useLocalStorage("MEMEDONA_V1_INSTALLED", false);
+
+  function saveInstalled() {
+    _saveInstalled(true);
+  }
 
   const [logoProps, setLogoProps] = React.useState(undefined);
   const [collectors, setCollectors] = React.useState([]);
@@ -40,7 +44,6 @@ function MemedonaProvider({ children }) {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
   const [videosMuted, setVideosMuted] = React.useState(true);
-  const [showA2HS, setShowA2HS] = React.useState(false);
   const [showInfo, setShowInfo] = React.useState(false);
 
   // Initial consume api
@@ -129,8 +132,6 @@ function MemedonaProvider({ children }) {
         error,
         videosMuted,
         setVideosMuted,
-        showA2HS,
-        setShowA2HS,
         showInfo,
         setShowInfo,
         installed,

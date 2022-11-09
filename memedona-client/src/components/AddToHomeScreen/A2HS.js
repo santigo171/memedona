@@ -2,52 +2,82 @@ import React from "react";
 
 import { MemedonaContext } from "../../MemedonaContext";
 
-import shaggy from "../../assets/img/memes/shaggy.png";
+import screenshot1 from "../../assets/img/screenshots/1.jpg";
+import doofPhone from "../../assets/img/memes/doofPhone.png";
+import doofMap from "../../assets/img/memes/doofMap.jpg";
 
 import "./A2HS.scss";
 
+let mustRender = true;
+
 function A2HS() {
-  const { setShowA2HS } = React.useContext(MemedonaContext);
-  const { A2HSPrompt, setA2HSPrompt } = React.useState(null);
+  const { saveInstalled, setShowInfo, installed } =
+    React.useContext(MemedonaContext);
+  const [_installed, _setInstalled] = React.useState(false);
 
   React.useEffect(() => {
-    window.addEventListener("beforeinstallprompt", (e) => {
-      console.log("A2HS");
-      e.preventDefault();
-      setA2HSPrompt(e);
-      setShowA2HS(true);
-    });
+    if (installed) {
+      mustRender = false;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function startUpA2HS() {
-    console.log(A2HSPrompt);
-    setShowA2HS(false);
-    A2HSPrompt.prompt();
-    A2HSPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === "accepted") {
-        console.log("User accepted the A2HS prompt");
-      } else {
-        console.log("User dismissed the A2HS prompt");
-      }
-      setA2HSPrompt(null);
-    });
-  }
-
   return (
     <div className="A2HS">
-      <button onClick={startUpA2HS} className="A2HS__button">
-        Add to Home Screen
-      </button>
-      <p className="A2HS__text">
-        This feature will allow you to have{" "}
-        <span className="A2HS__text__span">Memedona</span> in your home screen.
-        "Cool" says Shaggy
-      </p>
-      <img className="A2HS__img" src={shaggy} alt="Shaggy" />
-      <button onClick={() => setShowA2HS(false)} className="A2HS__X">
-        X
-      </button>
+      {!_installed && mustRender && (
+        <>
+          <p className="A2HS__title">
+            Looks like you're enjoying <span className="brand">Memedona</span>
+          </p>
+          <p className="A2HS__subtitle">
+            Why don't install it on your phone, like Doofenshmirtz
+          </p>
+          <div className="A2HS__imgdiv">
+            <img
+              src={screenshot1}
+              alt="Screenshot were Memedona is installed as an app in home screen."
+              className="A2HS__imgdiv__image"
+            />
+            <img
+              src={doofPhone}
+              alt="Doofenshmirtz, a character from Phineas and Ferb holding a Doofenshmirtz"
+              className="A2HS__imgdiv__image"
+            />
+          </div>
+          <button
+            className="A2HS__button A2HS__button--primary"
+            onClick={() => {
+              setShowInfo(true);
+              _setInstalled(true);
+            }}
+          >
+            Add to home screen
+          </button>
+          <button
+            className="A2HS__button"
+            onClick={() => {
+              saveInstalled(true);
+              _setInstalled(true);
+            }}
+          >
+            Already added
+          </button>
+        </>
+      )}
+      {_installed && mustRender && (
+        <>
+          <img
+            className="A2HS__doof-happy"
+            src={doofMap}
+            alt="Doofenshmirtz happy"
+          />
+          <p className="A2HS__title">
+            Doofenshmirtz said that who have{" "}
+            <span className="brand">Memedona</span> added on home screen is
+            epic. You are epic! You won't see this message again
+          </p>
+        </>
+      )}
     </div>
   );
 }

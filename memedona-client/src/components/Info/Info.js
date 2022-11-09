@@ -10,7 +10,7 @@ import screenshot4 from "../../assets/img/screenshots/4.jpg";
 import screenshot5 from "../../assets/img/screenshots/5.jpg";
 
 function Setting({ option, children }) {
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = React.useState(true);
   const TriangleStyle = show ? "" : "Setting__option__icon";
   return (
     <div>

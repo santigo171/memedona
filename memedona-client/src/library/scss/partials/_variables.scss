@@ -13,9 +13,10 @@ $text-margin: 9px;
 
 $brand-color: #fb903c;
 
-$button-brand-color: #e57a26;
-$button-hover-brand-color: #f7842c;
-$button-radius: 5px;
+$button-primary-color: #e57a26;
+$button-primary-color--hover: #f7842c;
+$button-secondary-color: #373737;
+$button-secondary-color--hover: #4d4d4d;
 
 $link-color: #ffb377;
 
@@ -83,12 +84,6 @@ $loading-memes-subtitle-size--tablet: 2rem;
 $loading-memes-img-rotation-speed: 3s;
 $loading-memes-img-size: 150px;
 $loading-memes-img-size--tablet: 150px;
-
-// Add To Home Screen
-$a2hs-padding: 20px;
-$a2hs-height: 450px;
-$a2hs-X-height: 30px;
-$a2hs-img-height: 250px;
 
 // Info
 $info-font-size: 1.6rem;

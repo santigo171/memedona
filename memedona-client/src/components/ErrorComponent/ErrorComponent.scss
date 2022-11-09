@@ -34,10 +34,10 @@
   padding: 10px;
   border-radius: 10px;
   color: #000;
-  background-color: $brand-color;
+  background-color: $button-primary-color;
   text-align: center;
 }
 
 .ErrorComponent__button:hover {
-  background-color: $button-brand-color;
+  background-color: $button-primary-color--hover;
 }
